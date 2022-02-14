@@ -7,7 +7,7 @@ import com.feiniaojin.naaf.console.dto.UserInfoView;
 
 /**
  * userInfo类Service接口
- * 表名称：t_user_info
+ * 表名称：u_user_info
  * 表注释：用户信息表
  */
 public interface UserInfoService {
@@ -15,16 +15,16 @@ public interface UserInfoService {
     /**
      * 创建
      *
-     * @param command
+     * @param cmd
      */
-    void create(UserInfoCmd command);
+    void create(UserInfoCmd cmd);
 
     /**
      * 更新
      *
-     * @param command
+     * @param cmd
      */
-    void update(UserInfoCmd command);
+    void update(UserInfoCmd cmd);
 
     /**
      * 根据业务主键查询

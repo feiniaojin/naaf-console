@@ -34,7 +34,7 @@
         version
     </sql>
     <insert id="insert" parameterType="com.feiniaojin.naaf.console.entity.UserInfo">
-        insert into t_user_info (
+        insert into u_user_info (
         id,
         uid,
         mobile_phone,
@@ -63,4 +63,9 @@
             #{version}
         </trim>
     </insert>
+    <select id="findOneById" resultMap="BaseResultMap">
+        select
+        <include refid="BaseColumn"/>
+        from u_user_info where id=#{id}
+    </select>
 </mapper>

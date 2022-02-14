@@ -1,5 +1,5 @@
 --初始化SQL
-CREATE TABLE `t_user` (
+CREATE TABLE `sys_user` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
     `uid` varchar(64) NULL COMMENT '账号，业务使用',
     `mobile_phone` varchar(64) NULL COMMENT '手机号',
@@ -17,7 +17,7 @@ CREATE TABLE `t_user` (
     PRIMARY KEY (`id`),
     index `idx_uid`(`uid`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户账号表';
-CREATE TABLE `t_user_info` (
+CREATE TABLE `u_user_info` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
     `uid` varchar(64) NULL COMMENT '账号，业务使用',
     `mobile_phone` varchar(64) NULL COMMENT '手机号',
@@ -33,7 +33,7 @@ CREATE TABLE `t_user_info` (
     PRIMARY KEY (`id`),
     index `idx_uid`(`uid`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户信息表';
-CREATE TABLE `t_resource` (
+CREATE TABLE `sys_resource` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
     `resource_id` bigint NOT NULL COMMENT '资源id',
     `parent_resource_id` bigint NOT NULL DEFAULT 0 COMMENT '父资源id',
@@ -51,7 +51,7 @@ CREATE TABLE `t_resource` (
     PRIMARY KEY (`id`),
     index `idx_resource_id`(`resource_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '受限资源表';
-CREATE TABLE `t_role` (
+CREATE TABLE `sys_role` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
     `role_id` bigint NOT NULL COMMENT '角色id',
     `role_name` varchar(64) NULL COMMENT '角色名称',
@@ -64,7 +64,7 @@ CREATE TABLE `t_role` (
     PRIMARY KEY (`id`),
     index `idx_role_id`(`role_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色表';
-CREATE TABLE `t_role_rel_resource` (
+CREATE TABLE `sys_role_rel_resource` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
     `role_id` bigint NOT NULL COMMENT '角色id',
     `resource_id` varchar(64) NULL COMMENT '资源id',
@@ -77,7 +77,7 @@ CREATE TABLE `t_role_rel_resource` (
     PRIMARY KEY (`id`),
     index `idx_role_resource`(`role_id`, `resource_id`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色与受限资源关联表';
-CREATE TABLE `t_user_rel_role` (
+CREATE TABLE `sys_user_rel_role` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
     `role_id` bigint NOT NULL COMMENT '角色id',
     `uid` varchar(64) NULL COMMENT '用户uid',
