@@ -29,7 +29,7 @@ public class UserInfoViewAssembler {
         return viewList;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface UserInfoViewMapper {
         UserInfoViewMapper INSTANCE = Mappers.getMapper(UserInfoViewMapper.class);
 

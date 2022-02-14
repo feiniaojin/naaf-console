@@ -21,7 +21,7 @@ public class SysResourceCmdAssembler {
         return sysResource;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface SysResourceCmdMapper {
         SysResourceCmdMapper INSTANCE = Mappers.getMapper(SysResourceCmdMapper.class);
 

@@ -29,7 +29,7 @@ public class SysResourceViewAssembler {
         return viewList;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface SysResourceViewMapper {
         SysResourceViewMapper INSTANCE = Mappers.getMapper(SysResourceViewMapper.class);
 

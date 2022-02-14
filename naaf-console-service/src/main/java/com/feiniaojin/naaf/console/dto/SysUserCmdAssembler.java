@@ -21,7 +21,7 @@ public class SysUserCmdAssembler {
         return sysUser;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface SysUserCmdMapper {
         SysUserCmdMapper INSTANCE = Mappers.getMapper(SysUserCmdMapper.class);
 

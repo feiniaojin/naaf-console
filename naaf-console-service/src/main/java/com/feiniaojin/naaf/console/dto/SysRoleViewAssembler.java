@@ -29,7 +29,7 @@ public class SysRoleViewAssembler {
         return viewList;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface SysRoleViewMapper {
         SysRoleViewMapper INSTANCE = Mappers.getMapper(SysRoleViewMapper.class);
 

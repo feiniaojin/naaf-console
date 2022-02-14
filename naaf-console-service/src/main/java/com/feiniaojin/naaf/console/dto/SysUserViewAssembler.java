@@ -29,7 +29,7 @@ public class SysUserViewAssembler {
         return viewList;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface SysUserViewMapper {
         SysUserViewMapper INSTANCE = Mappers.getMapper(SysUserViewMapper.class);
 

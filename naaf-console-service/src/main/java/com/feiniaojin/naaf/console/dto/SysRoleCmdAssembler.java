@@ -21,7 +21,7 @@ public class SysRoleCmdAssembler {
         return sysRole;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface SysRoleCmdMapper {
         SysRoleCmdMapper INSTANCE = Mappers.getMapper(SysRoleCmdMapper.class);
 

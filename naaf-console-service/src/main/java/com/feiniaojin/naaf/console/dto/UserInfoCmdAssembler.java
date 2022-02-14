@@ -21,7 +21,7 @@ public class UserInfoCmdAssembler {
         return userInfo;
     }
 
-    @Mapper
+    @Mapper(componentModel = "spring")
     public interface UserInfoCmdMapper {
         UserInfoCmdMapper INSTANCE = Mappers.getMapper(UserInfoCmdMapper.class);
 
