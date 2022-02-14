@@ -1,10 +1,7 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.dto.SysUserAssembler;
-import com.feiniaojin.naaf.console.dto.SysUserCmd;
-import com.feiniaojin.naaf.console.dto.SysUserQuery;
-import com.feiniaojin.naaf.console.dto.SysUserView;
+import com.feiniaojin.naaf.console.dto.*;
 import com.feiniaojin.naaf.console.entity.SysUser;
 import com.feiniaojin.naaf.console.exception.SysUserExceptions;
 import com.feiniaojin.naaf.console.mapper.SysUserMapper;
@@ -19,6 +16,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * SysUser类Service实现类
@@ -38,34 +36,57 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserRepository sysUserRepository;
 
+    @Resource
+    private SysUserCmdAssembler cmdAssembler;
+
+    @Resource
+    private SysUserViewAssembler viewAssembler;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(SysUserCmd cmd) {
-        SysUser sysUser = SysUserAssembler.INSTANCE.mapToEntity(cmd);
-        sysUserMapper.insert(sysUser);
+        //根据cmd组装实体
+         SysUser mapToEntity = cmdAssembler.mapToEntity(cmd);
+        //执行创建的初始化逻辑
+        SysUser sysUser = SysUserAggregate.from(mapToEntity).create();
+        //只有service才能调用下层的adapter，所以SysUserAggregate.create执行完成之后，在此处填充业务id
+
+        log.info("SysUser create:cmd=[{}],sysUser=[{}]", gson.toJson(cmd), gson.toJson(sysUser));
+        sysUserRepository.save(sysUser);
     }
 
     @Override
     public void update(SysUserCmd cmd) {
-
+        //查询数据
+        Optional<SysUser> byId = sysUserRepository.findById(cmd.getId());
+        if (!byId.isPresent()) {
+            log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
+            throw new SysUserExceptions.NotFoundException();
+        }
+        //cmd转换为实体，作为输入
+        SysUser input = cmdAssembler.mapToEntity(cmd);
+        //获取数据库对应实体
+        SysUser sysUser = byId.get();
+        //执行业务更新
+        SysUserAggregate.from(sysUser).update(input);
+        //保存
+        log.info("SysUser update:cmd=[{}],sysUser=[{}]", gson.toJson(cmd), gson.toJson(sysUser));
+        sysUserRepository.save(sysUser);
     }
 
     @Override
     public SysUserView get(SysUserQuery query) {
-
-        Long id = query.getId();
-
-        SysUser sysUser = sysUserMapper.findOneById(id);
-
-        if (sysUser == null) {
-            log.error("查询不到数据,query=[{}]", gson.toJson(query));
-            throw new SysUserExceptions.NotFoundException();
-        }
-
-        SysUserView sysUserView = SysUserAssembler.INSTANCE.mapToView(sysUser);
-
-        return sysUserView;
+       //查询数据
+       Long id = query.getId();
+       SysUser sysUser = sysUserMapper.findOneById(id);
+       if (sysUser == null) {
+           log.error("查询不到数据,query=[{}]", gson.toJson(query));
+           throw new SysUserExceptions.NotFoundException();
+       }
+       //拼接为view
+       SysUserView view = viewAssembler.mapToView(sysUser);
+       return view;
     }
 
     @Override
@@ -89,7 +110,7 @@ public class SysUserServiceImpl implements SysUserService {
 
         List<SysUser> sysUserList = sysUserMapperEx.pageList(paramMap);
 
-        List<SysUserView> views = SysUserAssembler.INSTANCE.mapToViewList(sysUserList);
+        List<SysUserView> views = viewAssembler.mapToViewList(sysUserList);
 
         pageBean.setList(views);
 

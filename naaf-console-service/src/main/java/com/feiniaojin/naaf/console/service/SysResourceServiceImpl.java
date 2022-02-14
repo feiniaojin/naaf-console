@@ -2,10 +2,7 @@ package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
 import com.feiniaojin.naaf.console.adapter.id.IdGeneratorAdapter;
-import com.feiniaojin.naaf.console.dto.SysResourceAssembler;
-import com.feiniaojin.naaf.console.dto.SysResourceCmd;
-import com.feiniaojin.naaf.console.dto.SysResourceQuery;
-import com.feiniaojin.naaf.console.dto.SysResourceView;
+import com.feiniaojin.naaf.console.dto.*;
 import com.feiniaojin.naaf.console.entity.SysResource;
 import com.feiniaojin.naaf.console.exception.SysResourceExceptions;
 import com.feiniaojin.naaf.console.mapper.SysResourceMapper;
@@ -20,6 +17,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * SysResource类Service实现类
@@ -42,38 +40,56 @@ public class SysResourceServiceImpl implements SysResourceService {
     @Resource
     private IdGeneratorAdapter idGeneratorAdapter;
 
+    @Resource
+    private SysResourceCmdAssembler cmdAssembler;
+
+    @Resource
+    private SysResourceViewAssembler viewAssembler;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(SysResourceCmd cmd) {
-        SysResource sysResource = SysResourceAssembler.INSTANCE.mapToEntity(cmd);
+        //根据cmd组装实体
+        SysResource mapToEntity = cmdAssembler.mapToEntity(cmd);
+        //执行创建的初始化逻辑
+        SysResource sysResource = SysResourceAggregate.from(mapToEntity).create();
+        //只有service才能调用下层的adapter，所以SysResourceModel.create执行完成之后，在此处填充业务id
         sysResource.setResourceId(idGeneratorAdapter.getUid());
-        sysResource.setParentResourceId(0L);
-        sysResource.setType(0);
-        sysResource.setVisible(1);
         log.info("SysResource create:cmd=[{}],sysResource=[{}]", gson.toJson(cmd), gson.toJson(sysResource));
         sysResourceRepository.save(sysResource);
     }
 
     @Override
     public void update(SysResourceCmd cmd) {
-
+        //查询数据
+        Optional<SysResource> byId = sysResourceRepository.findById(cmd.getId());
+        if (!byId.isPresent()) {
+            log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
+            throw new SysResourceExceptions.NotFoundException();
+        }
+        //cmd转换为实体，作为输入
+        SysResource input = cmdAssembler.mapToEntity(cmd);
+        //获取数据库对应实体
+        SysResource sysResource = byId.get();
+        //执行业务更新
+        SysResourceAggregate.from(sysResource).update(input);
+        //保存
+        log.info("SysResource update:cmd=[{}],sysResource=[{}]", gson.toJson(cmd), gson.toJson(sysResource));
+        sysResourceRepository.save(sysResource);
     }
 
     @Override
     public SysResourceView get(SysResourceQuery query) {
-
+        //查询数据
         Long id = query.getId();
-
         SysResource sysResource = sysResourceMapper.findOneById(id);
-
         if (sysResource == null) {
             log.error("查询不到数据,query=[{}]", gson.toJson(query));
             throw new SysResourceExceptions.NotFoundException();
         }
-
-        SysResourceView sysResourceView = SysResourceAssembler.INSTANCE.mapToView(sysResource);
-
+        //拼接为view
+        SysResourceView sysResourceView = viewAssembler.mapToView(sysResource);
         return sysResourceView;
     }
 
@@ -98,7 +114,7 @@ public class SysResourceServiceImpl implements SysResourceService {
 
         List<SysResource> sysResourceList = sysResourceMapperEx.pageList(paramMap);
 
-        List<SysResourceView> views = SysResourceAssembler.INSTANCE.mapToViewList(sysResourceList);
+        List<SysResourceView> views = viewAssembler.mapToViewList(sysResourceList);
 
         pageBean.setList(views);
 

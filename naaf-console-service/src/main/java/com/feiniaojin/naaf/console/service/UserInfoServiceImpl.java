@@ -1,10 +1,7 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.dto.UserInfoAssembler;
-import com.feiniaojin.naaf.console.dto.UserInfoCmd;
-import com.feiniaojin.naaf.console.dto.UserInfoQuery;
-import com.feiniaojin.naaf.console.dto.UserInfoView;
+import com.feiniaojin.naaf.console.dto.*;
 import com.feiniaojin.naaf.console.entity.UserInfo;
 import com.feiniaojin.naaf.console.exception.UserInfoExceptions;
 import com.feiniaojin.naaf.console.mapper.UserInfoMapper;
@@ -19,6 +16,7 @@ import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * UserInfo类Service实现类
@@ -38,34 +36,57 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Resource
     private UserInfoRepository userInfoRepository;
 
+    @Resource
+    private UserInfoCmdAssembler cmdAssembler;
+
+    @Resource
+    private UserInfoViewAssembler viewAssembler;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(UserInfoCmd cmd) {
-        UserInfo userInfo = UserInfoAssembler.INSTANCE.mapToEntity(cmd);
-        userInfoMapper.insert(userInfo);
+        //根据cmd组装实体
+         UserInfo mapToEntity = cmdAssembler.mapToEntity(cmd);
+        //执行创建的初始化逻辑
+        UserInfo userInfo = UserInfoAggregate.from(mapToEntity).create();
+        //只有service才能调用下层的adapter，所以UserInfoAggregate.create执行完成之后，在此处填充业务id
+
+        log.info("UserInfo create:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
+        userInfoRepository.save(userInfo);
     }
 
     @Override
     public void update(UserInfoCmd cmd) {
-
+        //查询数据
+        Optional<UserInfo> byId = userInfoRepository.findById(cmd.getId());
+        if (!byId.isPresent()) {
+            log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
+            throw new UserInfoExceptions.NotFoundException();
+        }
+        //cmd转换为实体，作为输入
+        UserInfo input = cmdAssembler.mapToEntity(cmd);
+        //获取数据库对应实体
+        UserInfo userInfo = byId.get();
+        //执行业务更新
+        UserInfoAggregate.from(userInfo).update(input);
+        //保存
+        log.info("UserInfo update:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
+        userInfoRepository.save(userInfo);
     }
 
     @Override
     public UserInfoView get(UserInfoQuery query) {
-
-        Long id = query.getId();
-
-        UserInfo userInfo = userInfoMapper.findOneById(id);
-
-        if (userInfo == null) {
-            log.error("查询不到数据,query=[{}]", gson.toJson(query));
-            throw new UserInfoExceptions.NotFoundException();
-        }
-
-        UserInfoView userInfoView = UserInfoAssembler.INSTANCE.mapToView(userInfo);
-
-        return userInfoView;
+       //查询数据
+       Long id = query.getId();
+       UserInfo userInfo = userInfoMapper.findOneById(id);
+       if (userInfo == null) {
+           log.error("查询不到数据,query=[{}]", gson.toJson(query));
+           throw new UserInfoExceptions.NotFoundException();
+       }
+       //拼接为view
+       UserInfoView view = viewAssembler.mapToView(userInfo);
+       return view;
     }
 
     @Override
@@ -89,7 +110,7 @@ public class UserInfoServiceImpl implements UserInfoService {
 
         List<UserInfo> userInfoList = userInfoMapperEx.pageList(paramMap);
 
-        List<UserInfoView> views = UserInfoAssembler.INSTANCE.mapToViewList(userInfoList);
+        List<UserInfoView> views = viewAssembler.mapToViewList(userInfoList);
 
         pageBean.setList(views);
 
