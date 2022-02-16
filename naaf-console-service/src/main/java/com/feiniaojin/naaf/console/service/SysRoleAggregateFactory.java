@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 工厂存在的原因是解决复杂对象的创建问题，例如为对象的id属性赋值
@@ -53,6 +54,7 @@ public class SysRoleAggregateFactory {
                 list.add(relResource);
             }
             aggregate.setRoleRelResourceList(list);
+            aggregate.setResourceIdList(resourceIdList);
         }
         return aggregate;
     }
@@ -70,6 +72,10 @@ public class SysRoleAggregateFactory {
         paramMap.put("roleId", newEntity.getRoleId());
         List<SysRoleRelResource> roleRelResources = relResourceMapperEx.list(paramMap);
         aggregate.setRoleRelResourceList(roleRelResources);
+        if (!CollectionUtils.isEmpty(roleRelResources)) {
+            List<String> relResourceIds = roleRelResources.stream().map(rel -> rel.getResourceId()).collect(Collectors.toList());
+            aggregate.setResourceIdList(relResourceIds);
+        }
         return aggregate;
     }
 }

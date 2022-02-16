@@ -14,6 +14,8 @@ public class SysRoleAggregate {
 
     private SysRole entity;
 
+    private List<String> resourceIdList;
+
     /**
      * 角色关联的受限资源
      */

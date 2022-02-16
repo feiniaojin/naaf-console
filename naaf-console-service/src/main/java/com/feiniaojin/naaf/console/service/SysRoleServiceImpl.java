@@ -52,7 +52,7 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleAggregateFactory factory;
 
     @Resource
-    private SysRoleRelResourceMapperEx relResourceMapperEx;
+    private SysRoleAggregateRepository aggregateRepository;
 
     private Gson gson = new Gson();
 
@@ -64,8 +64,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         //执行创建的初始化逻辑
         aggregate.create();
         log.info("SysRole create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
-        sysRoleRepository.save(aggregate.getEntity());
-        roleRelResourceRepository.saveAll(aggregate.getRoleRelResourceList());
+        aggregateRepository.save(aggregate);
     }
 
     @Override
@@ -86,19 +85,8 @@ public class SysRoleServiceImpl implements SysRoleService {
         List<SysRoleRelResource> oldRoleRelResourceList = aggregate.getRoleRelResourceList();
         //实际执行更新操作
         aggregate.update(input, resourceIdList);
-        //需要删除的resource
-        Set<String> oldResourceIdSet = oldRoleRelResourceList.stream()
-                .map(r -> r.getResourceId())
-                .collect(Collectors.toSet());
-        List<String> cmdResourceIdList = cmd.getResourceIdList();
-        //待删除
-        Collection subtract = CollectionUtils.subtract(oldResourceIdSet, cmdResourceIdList);
-        relResourceMapperEx.deleteBatch(subtract);
-        //保存
         log.info("SysRole update:cmd=[{}],sysRole=[{}]", gson.toJson(cmd), gson.toJson(sysRole));
-        sysRoleRepository.save(aggregate.getEntity());
-        //需要新增的resource
-        roleRelResourceRepository.saveAll(aggregate.getRoleRelResourceList());
+        aggregateRepository.saveUpdate(aggregate,oldRoleRelResourceList);
     }
 
     @Override
