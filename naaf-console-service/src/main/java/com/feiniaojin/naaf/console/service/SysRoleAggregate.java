@@ -1,26 +1,15 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.console.entity.SysRole;
+import lombok.Data;
 
 /**
  * SysResourceModel的定位是承接业务逻辑，model中不允许调用数据库、缓存
  */
+@Data
 public class SysRoleAggregate {
 
     private SysRole entity;
-
-    private SysRoleAggregate() {
-
-    }
-
-    private SysRoleAggregate(SysRole entity) {
-        this();
-        this.entity = entity;
-    }
-
-    public static SysRoleAggregate from(SysRole entity) {
-        return new SysRoleAggregate(entity);
-    }
 
     /**
      * 执行初始化逻辑
@@ -39,7 +28,7 @@ public class SysRoleAggregate {
      * @return
      */
     public SysRole update(SysRole newEntity) {
-
+        //更新的具体逻辑
         return entity;
     }
 }

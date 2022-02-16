@@ -42,18 +42,19 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Resource
     private UserInfoViewAssembler viewAssembler;
 
+    @Resource
+    private UserInfoAggregateFactory factory;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(UserInfoCmd cmd) {
         //根据cmd组装实体
-         UserInfo mapToEntity = cmdAssembler.mapToEntity(cmd);
+        UserInfoAggregate aggregate = factory.newFromCmd(cmd);
         //执行创建的初始化逻辑
-        UserInfo userInfo = UserInfoAggregate.from(mapToEntity).create();
-        //只有service才能调用下层的adapter，所以UserInfoAggregate.create执行完成之后，在此处填充业务id
-
-        log.info("UserInfo create:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
-        userInfoRepository.save(userInfo);
+        aggregate.create();
+        log.info("UserInfo create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
+        userInfoRepository.save(aggregate.getEntity());
     }
 
     @Override
@@ -69,10 +70,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         //获取数据库对应实体
         UserInfo userInfo = byId.get();
         //执行业务更新
-        UserInfoAggregate.from(userInfo).update(input);
+        UserInfoAggregate aggregate = factory.fromEntity(userInfo);
+        aggregate.update(input);
         //保存
         log.info("UserInfo update:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
-        userInfoRepository.save(userInfo);
+        userInfoRepository.save(aggregate.getEntity());
     }
 
     @Override

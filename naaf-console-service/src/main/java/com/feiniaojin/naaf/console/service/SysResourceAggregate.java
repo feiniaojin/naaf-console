@@ -1,39 +1,33 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.console.entity.SysResource;
+import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * SysResourceModel的定位是承接业务逻辑，model中不允许调用数据库、缓存
  */
+@Data
 public class SysResourceAggregate {
 
-    private SysResource sysResource;
+    private SysResource entity;
 
-    private SysResourceAggregate() {
-
-    }
-
-    private SysResourceAggregate(SysResource sysResource) {
-        this();
-        this.sysResource = sysResource;
-    }
-
-    public static SysResourceAggregate from(SysResource sysResource) {
-        return new SysResourceAggregate(sysResource);
+    public SysResource getEntity() {
+        return entity;
     }
 
     /**
-     * 执行初始化逻辑
+     * 执行初始化逻辑,初始化的知识只有聚合本身才清楚
      *
      * @return
      */
-    public SysResource create() {
-        sysResource.setParentResourceId(0L);
-        sysResource.setType(0);
-        sysResource.setVisible(1);
-        return sysResource;
+    public SysResourceAggregate create() {
+        entity.setParentResourceId(0L);
+        entity.setType(0);
+        entity.setVisible(1);
+        return this;
     }
+
 
     /**
      * 执行更新逻辑
@@ -41,13 +35,13 @@ public class SysResourceAggregate {
      * @param newEntity
      * @return
      */
-    public SysResource update(SysResource newEntity) {
+    public SysResourceAggregate update(SysResource newEntity) {
         if (StringUtils.isNotBlank(newEntity.getMappingMethod())) {
-            sysResource.setHttpMethod(newEntity.getHttpMethod());
+            entity.setHttpMethod(newEntity.getHttpMethod());
         }
         if (newEntity.getVisible() != null) {
-            sysResource.setVisible(newEntity.getVisible());
+            entity.setVisible(newEntity.getVisible());
         }
-        return sysResource;
+        return this;
     }
 }

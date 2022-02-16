@@ -1,26 +1,15 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.console.entity.SysUser;
+import lombok.Data;
 
 /**
  * SysResourceModel的定位是承接业务逻辑，model中不允许调用数据库、缓存
  */
+@Data
 public class SysUserAggregate {
 
     private SysUser entity;
-
-    private SysUserAggregate() {
-
-    }
-
-    private SysUserAggregate(SysUser entity) {
-        this();
-        this.entity = entity;
-    }
-
-    public static SysUserAggregate from(SysUser entity) {
-        return new SysUserAggregate(entity);
-    }
 
     /**
      * 执行初始化逻辑
@@ -39,7 +28,7 @@ public class SysUserAggregate {
      * @return
      */
     public SysUser update(SysUser newEntity) {
-
+        //更新的具体逻辑
         return entity;
     }
 }

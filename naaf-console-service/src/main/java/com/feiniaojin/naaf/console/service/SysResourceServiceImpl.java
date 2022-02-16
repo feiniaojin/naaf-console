@@ -46,18 +46,18 @@ public class SysResourceServiceImpl implements SysResourceService {
     @Resource
     private SysResourceViewAssembler viewAssembler;
 
+    @Resource
+    private SysResourceAggregateFactory factory;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(SysResourceCmd cmd) {
-        //根据cmd组装实体
-        SysResource mapToEntity = cmdAssembler.mapToEntity(cmd);
+        SysResourceAggregate aggregate = factory.newFromCmd(cmd);
         //执行创建的初始化逻辑
-        SysResource sysResource = SysResourceAggregate.from(mapToEntity).create();
-        //只有service才能调用下层的adapter，所以SysResourceModel.create执行完成之后，在此处填充业务id
-        sysResource.setResourceId(idGeneratorAdapter.getUid());
-        log.info("SysResource create:cmd=[{}],sysResource=[{}]", gson.toJson(cmd), gson.toJson(sysResource));
-        sysResourceRepository.save(sysResource);
+        aggregate.create();
+        log.info("SysResource create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
+        sysResourceRepository.save(aggregate.getEntity());
     }
 
     @Override
@@ -73,10 +73,11 @@ public class SysResourceServiceImpl implements SysResourceService {
         //获取数据库对应实体
         SysResource sysResource = byId.get();
         //执行业务更新
-        SysResourceAggregate.from(sysResource).update(input);
+        SysResourceAggregate aggregate = factory.fromEntity(sysResource);
+        aggregate.update(input);
         //保存
         log.info("SysResource update:cmd=[{}],sysResource=[{}]", gson.toJson(cmd), gson.toJson(sysResource));
-        sysResourceRepository.save(sysResource);
+        sysResourceRepository.save(aggregate.getEntity());
     }
 
     @Override

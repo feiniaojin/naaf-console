@@ -42,18 +42,19 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserViewAssembler viewAssembler;
 
+    @Resource
+    private SysUserAggregateFactory factory;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(SysUserCmd cmd) {
         //根据cmd组装实体
-         SysUser mapToEntity = cmdAssembler.mapToEntity(cmd);
+        SysUserAggregate aggregate = factory.newFromCmd(cmd);
         //执行创建的初始化逻辑
-        SysUser sysUser = SysUserAggregate.from(mapToEntity).create();
-        //只有service才能调用下层的adapter，所以SysUserAggregate.create执行完成之后，在此处填充业务id
-
-        log.info("SysUser create:cmd=[{}],sysUser=[{}]", gson.toJson(cmd), gson.toJson(sysUser));
-        sysUserRepository.save(sysUser);
+        aggregate.create();
+        log.info("SysUser create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
+        sysUserRepository.save(aggregate.getEntity());
     }
 
     @Override
@@ -69,10 +70,11 @@ public class SysUserServiceImpl implements SysUserService {
         //获取数据库对应实体
         SysUser sysUser = byId.get();
         //执行业务更新
-        SysUserAggregate.from(sysUser).update(input);
+        SysUserAggregate aggregate = factory.fromEntity(sysUser);
+        aggregate.update(input);
         //保存
         log.info("SysUser update:cmd=[{}],sysUser=[{}]", gson.toJson(cmd), gson.toJson(sysUser));
-        sysUserRepository.save(sysUser);
+        sysUserRepository.save(aggregate.getEntity());
     }
 
     @Override

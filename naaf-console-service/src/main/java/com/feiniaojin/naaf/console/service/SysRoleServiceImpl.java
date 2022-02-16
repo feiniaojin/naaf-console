@@ -42,18 +42,19 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Resource
     private SysRoleViewAssembler viewAssembler;
 
+    @Resource
+    private SysRoleAggregateFactory factory;
+
     private Gson gson = new Gson();
 
     @Override
     public void create(SysRoleCmd cmd) {
         //根据cmd组装实体
-         SysRole mapToEntity = cmdAssembler.mapToEntity(cmd);
+        SysRoleAggregate aggregate = factory.newFromCmd(cmd);
         //执行创建的初始化逻辑
-        SysRole sysRole = SysRoleAggregate.from(mapToEntity).create();
-        //只有service才能调用下层的adapter，所以SysRoleAggregate.create执行完成之后，在此处填充业务id
-
-        log.info("SysRole create:cmd=[{}],sysRole=[{}]", gson.toJson(cmd), gson.toJson(sysRole));
-        sysRoleRepository.save(sysRole);
+        aggregate.create();
+        log.info("SysRole create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
+        sysRoleRepository.save(aggregate.getEntity());
     }
 
     @Override
@@ -69,10 +70,11 @@ public class SysRoleServiceImpl implements SysRoleService {
         //获取数据库对应实体
         SysRole sysRole = byId.get();
         //执行业务更新
-        SysRoleAggregate.from(sysRole).update(input);
+        SysRoleAggregate aggregate = factory.fromEntity(sysRole);
+        aggregate.update(input);
         //保存
         log.info("SysRole update:cmd=[{}],sysRole=[{}]", gson.toJson(cmd), gson.toJson(sysRole));
-        sysRoleRepository.save(sysRole);
+        sysRoleRepository.save(aggregate.getEntity());
     }
 
     @Override
