@@ -1,7 +1,10 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.console.entity.SysRole;
+import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
 import lombok.Data;
+
+import java.util.List;
 
 /**
  * SysResourceModel的定位是承接业务逻辑，model中不允许调用数据库、缓存
@@ -10,6 +13,11 @@ import lombok.Data;
 public class SysRoleAggregate {
 
     private SysRole entity;
+
+    /**
+     * 角色关联的受限资源
+     */
+    private List<SysRoleRelResource> roleRelResourceList;
 
     /**
      * 执行初始化逻辑

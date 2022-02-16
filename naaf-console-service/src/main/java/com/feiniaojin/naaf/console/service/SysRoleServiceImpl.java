@@ -6,11 +6,13 @@ import com.feiniaojin.naaf.console.entity.SysRole;
 import com.feiniaojin.naaf.console.exception.SysRoleExceptions;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapper;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapperEx;
+import com.feiniaojin.naaf.console.repository.SysRoleRelResourceRepository;
 import com.feiniaojin.naaf.console.repository.SysRoleRepository;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -37,6 +39,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleRepository sysRoleRepository;
 
     @Resource
+    private SysRoleRelResourceRepository roleRelResourceRepository;
+
+    @Resource
     private SysRoleCmdAssembler cmdAssembler;
 
     @Resource
@@ -47,6 +52,7 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     private Gson gson = new Gson();
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void create(SysRoleCmd cmd) {
         //根据cmd组装实体
@@ -55,6 +61,7 @@ public class SysRoleServiceImpl implements SysRoleService {
         aggregate.create();
         log.info("SysRole create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
         sysRoleRepository.save(aggregate.getEntity());
+        roleRelResourceRepository.saveAll(aggregate.getRoleRelResourceList());
     }
 
     @Override
@@ -79,16 +86,16 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Override
     public SysRoleView get(SysRoleQuery query) {
-       //查询数据
-       Long id = query.getId();
-       SysRole sysRole = sysRoleMapper.findOneById(id);
-       if (sysRole == null) {
-           log.error("查询不到数据,query=[{}]", gson.toJson(query));
-           throw new SysRoleExceptions.NotFoundException();
-       }
-       //拼接为view
-       SysRoleView view = viewAssembler.mapToView(sysRole);
-       return view;
+        //查询数据
+        Long id = query.getId();
+        SysRole sysRole = sysRoleMapper.findOneById(id);
+        if (sysRole == null) {
+            log.error("查询不到数据,query=[{}]", gson.toJson(query));
+            throw new SysRoleExceptions.NotFoundException();
+        }
+        //拼接为view
+        SysRoleView view = viewAssembler.mapToView(sysRole);
+        return view;
     }
 
     @Override

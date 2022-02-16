@@ -3,13 +3,23 @@ package com.feiniaojin.naaf.console.service;
 import com.feiniaojin.naaf.console.entity.SysUser;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * SysResourceModel的定位是承接业务逻辑，model中不允许调用数据库、缓存
  */
 @Data
 public class SysUserAggregate {
 
+    /**
+     * 用户实体
+     */
     private SysUser entity;
+
+    /**
+     * 用户拥有的角色
+     */
+    private List<SysRoleAggregate> roleAggregates;
 
     /**
      * 执行初始化逻辑

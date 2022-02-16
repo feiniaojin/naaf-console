@@ -4,9 +4,14 @@ import com.feiniaojin.naaf.console.adapter.id.IdGeneratorAdapter;
 import com.feiniaojin.naaf.console.dto.SysRoleCmd;
 import com.feiniaojin.naaf.console.dto.SysRoleCmdAssembler;
 import com.feiniaojin.naaf.console.entity.SysRole;
+import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
+import com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapperEx;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 工厂存在的原因是解决复杂对象的创建问题，例如为对象的id属性赋值
@@ -20,6 +25,8 @@ public class SysRoleAggregateFactory {
     @Resource
     private IdGeneratorAdapter idGeneratorAdapter;
 
+    @Resource
+    private SysRoleRelResourceMapperEx relResourceMapperEx;
     /**
      * 根据cmd对象创建新的实体
      *
@@ -29,10 +36,21 @@ public class SysRoleAggregateFactory {
     public SysRoleAggregate newFromCmd(SysRoleCmd cmd) {
         //根据cmd组装实体
         SysRole mapToEntity = cmdAssembler.mapToEntity(cmd);
-//        例如: mapToEntity.setResourceId(idGeneratorAdapter.getUid());
         mapToEntity.setRoleId(idGeneratorAdapter.getUid());
         SysRoleAggregate aggregate = new SysRoleAggregate();
         aggregate.setEntity(mapToEntity);
+        //创建角色与资源的映射
+        List<String> resourceIdList = cmd.getResourceIdList();
+        if (!CollectionUtils.isEmpty(resourceIdList)) {
+            List<SysRoleRelResource> list = new ArrayList<>();
+            for (String resourceId : resourceIdList) {
+                SysRoleRelResource relResource = new SysRoleRelResource();
+                relResource.setRoleId(mapToEntity.getRoleId());
+                relResource.setResourceId(resourceId);
+                list.add(relResource);
+            }
+            aggregate.setRoleRelResourceList(list);
+        }
         return aggregate;
     }
 

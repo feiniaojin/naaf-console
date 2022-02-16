@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名称：sys_role
@@ -22,4 +23,5 @@ public class SysRoleCmd implements Serializable {
     private String modifiedBy;
     private Date modifiedTime;
     private Long version;
+    private List<String> resourceIdList;
 }
