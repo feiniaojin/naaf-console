@@ -15,8 +15,33 @@
         <include refid="com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapper.BaseColumn"/>
         FROM sys_role_rel_resource
         <where>
-
+            <if test="roleId != null">
+                AND role_id = #{roleId}
+            </if>
         </where>
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="list" resultMap="com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapper.BaseResultMap">
+        SELECT
+        <include refid="com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapper.BaseColumn"/>
+        FROM sys_role_rel_resource
+        <where>
+            <if test="roleId != null">
+                AND role_id = #{roleId}
+            </if>
+        </where>
+    </select>
+
+    <update id="deleteBatch">
+        UPDATE
+        sys_role_rel_resource
+        SET
+        deleted=1
+        WHERE
+        role_id in
+        <foreach collection="resourceIds" separator="," close=")" open="(" item="e">
+            #{e}
+        </foreach>
+    </update>
 </mapper>

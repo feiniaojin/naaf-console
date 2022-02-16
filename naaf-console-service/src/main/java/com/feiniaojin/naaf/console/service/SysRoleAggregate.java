@@ -35,7 +35,7 @@ public class SysRoleAggregate {
      * @param newEntity
      * @return
      */
-    public SysRole update(SysRole newEntity) {
+    public SysRole update(SysRole newEntity, List<String> resourceIdLis) {
         //更新的具体逻辑
         return entity;
     }

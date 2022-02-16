@@ -11,7 +11,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 工厂存在的原因是解决复杂对象的创建问题，例如为对象的id属性赋值
@@ -27,6 +29,7 @@ public class SysRoleAggregateFactory {
 
     @Resource
     private SysRoleRelResourceMapperEx relResourceMapperEx;
+
     /**
      * 根据cmd对象创建新的实体
      *
@@ -63,6 +66,10 @@ public class SysRoleAggregateFactory {
     public SysRoleAggregate fromEntity(SysRole newEntity) {
         SysRoleAggregate aggregate = new SysRoleAggregate();
         aggregate.setEntity(newEntity);
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("roleId", newEntity.getRoleId());
+        List<SysRoleRelResource> roleRelResources = relResourceMapperEx.list(paramMap);
+        aggregate.setRoleRelResourceList(roleRelResources);
         return aggregate;
     }
 }

@@ -3,22 +3,23 @@ package com.feiniaojin.naaf.console.service;
 import com.feiniaojin.naaf.commons.data.PageBean;
 import com.feiniaojin.naaf.console.dto.*;
 import com.feiniaojin.naaf.console.entity.SysRole;
+import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
 import com.feiniaojin.naaf.console.exception.SysRoleExceptions;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapper;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapperEx;
+import com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapperEx;
 import com.feiniaojin.naaf.console.repository.SysRoleRelResourceRepository;
 import com.feiniaojin.naaf.console.repository.SysRoleRepository;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * SysRole类Service实现类
@@ -50,6 +51,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Resource
     private SysRoleAggregateFactory factory;
 
+    @Resource
+    private SysRoleRelResourceMapperEx relResourceMapperEx;
+
     private Gson gson = new Gson();
 
     @Transactional(rollbackFor = Exception.class)
@@ -74,14 +78,27 @@ public class SysRoleServiceImpl implements SysRoleService {
         }
         //cmd转换为实体，作为输入
         SysRole input = cmdAssembler.mapToEntity(cmd);
+        List<String> resourceIdList = cmd.getResourceIdList();
         //获取数据库对应实体
         SysRole sysRole = byId.get();
-        //执行业务更新
+        //获得聚合以执行业务更新
         SysRoleAggregate aggregate = factory.fromEntity(sysRole);
-        aggregate.update(input);
+        List<SysRoleRelResource> oldRoleRelResourceList = aggregate.getRoleRelResourceList();
+        //实际执行更新操作
+        aggregate.update(input, resourceIdList);
+        //需要删除的resource
+        Set<String> oldResourceIdSet = oldRoleRelResourceList.stream()
+                .map(r -> r.getResourceId())
+                .collect(Collectors.toSet());
+        List<String> cmdResourceIdList = cmd.getResourceIdList();
+        //待删除
+        Collection subtract = CollectionUtils.subtract(oldResourceIdSet, cmdResourceIdList);
+        relResourceMapperEx.deleteBatch(subtract);
         //保存
         log.info("SysRole update:cmd=[{}],sysRole=[{}]", gson.toJson(cmd), gson.toJson(sysRole));
         sysRoleRepository.save(aggregate.getEntity());
+        //需要新增的resource
+        roleRelResourceRepository.saveAll(aggregate.getRoleRelResourceList());
     }
 
     @Override

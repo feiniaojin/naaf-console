@@ -1,8 +1,10 @@
 package com.feiniaojin.naaf.console.mapper;
 
 import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
+import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +30,17 @@ public interface SysRoleRelResourceMapperEx {
      * @return
      */
     List<SysRoleRelResource> pageList(Map<String, Object> paramMap);
+
+    /**
+     * 列表获取数据
+     * @param paramMap
+     * @return
+     */
+    List<SysRoleRelResource> list(Map<String, Object> paramMap);
+
+    /**
+     * 批量删除（逻辑删除）
+     * @param subtract
+     */
+    void deleteBatch(@Param("resourceIds") Collection resourceIds);
 }
