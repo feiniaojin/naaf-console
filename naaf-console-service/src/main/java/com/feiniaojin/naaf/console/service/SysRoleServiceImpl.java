@@ -3,23 +3,21 @@ package com.feiniaojin.naaf.console.service;
 import com.feiniaojin.naaf.commons.data.PageBean;
 import com.feiniaojin.naaf.console.dto.*;
 import com.feiniaojin.naaf.console.entity.SysRole;
-import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
 import com.feiniaojin.naaf.console.exception.SysRoleExceptions;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapper;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapperEx;
-import com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapperEx;
 import com.feiniaojin.naaf.console.repository.SysRoleRelResourceRepository;
 import com.feiniaojin.naaf.console.repository.SysRoleRepository;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * SysRole类Service实现类
@@ -68,25 +66,24 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(SysRoleCmd cmd) {
         //查询数据
-        Optional<SysRole> byId = sysRoleRepository.findById(cmd.getId());
-        if (!byId.isPresent()) {
+        SysRole sysRole = sysRoleMapperEx.findOne(cmd.getRoleId());
+        if (sysRole == null) {
             log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
             throw new SysRoleExceptions.NotFoundException();
         }
         //cmd转换为实体，作为输入
         SysRole input = cmdAssembler.mapToEntity(cmd);
         List<String> resourceIdList = cmd.getResourceIdList();
-        //获取数据库对应实体
-        SysRole sysRole = byId.get();
         //获得聚合以执行业务更新
         SysRoleAggregate aggregate = factory.fromEntity(sysRole);
-        List<SysRoleRelResource> oldRoleRelResourceList = aggregate.getRoleRelResourceList();
         //实际执行更新操作
         aggregate.update(input, resourceIdList);
         log.info("SysRole update:cmd=[{}],sysRole=[{}]", gson.toJson(cmd), gson.toJson(sysRole));
-        aggregateRepository.saveUpdate(aggregate,oldRoleRelResourceList);
+        //保存更新操作，并清理旧的资源
+        aggregateRepository.saveUpdate(aggregate);
     }
 
     @Override

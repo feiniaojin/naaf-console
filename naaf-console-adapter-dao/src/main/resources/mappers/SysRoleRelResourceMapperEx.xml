@@ -30,6 +30,12 @@
             <if test="roleId != null">
                 AND role_id = #{roleId}
             </if>
+            <if test="roleIds != null">
+                AND resource_id in
+                <foreach collection="resourceIds" separator="," item="e" open="(" close=")">
+                    #{e}
+                </foreach>
+            </if>
         </where>
     </select>
 
@@ -37,7 +43,8 @@
         UPDATE
         sys_role_rel_resource
         SET
-        deleted=1
+        deleted=1,
+        version=version+1
         WHERE
         role_id in
         <foreach collection="resourceIds" separator="," close=")" open="(" item="e">

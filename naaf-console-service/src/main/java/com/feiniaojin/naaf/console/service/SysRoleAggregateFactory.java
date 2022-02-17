@@ -6,8 +6,8 @@ import com.feiniaojin.naaf.console.dto.SysRoleCmdAssembler;
 import com.feiniaojin.naaf.console.entity.SysRole;
 import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
 import com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapperEx;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -45,12 +45,13 @@ public class SysRoleAggregateFactory {
         aggregate.setEntity(mapToEntity);
         //创建角色与资源的映射
         List<String> resourceIdList = cmd.getResourceIdList();
-        if (!CollectionUtils.isEmpty(resourceIdList)) {
+        if (CollectionUtils.isNotEmpty(resourceIdList)) {
             List<SysRoleRelResource> list = new ArrayList<>();
             for (String resourceId : resourceIdList) {
                 SysRoleRelResource relResource = new SysRoleRelResource();
                 relResource.setRoleId(mapToEntity.getRoleId());
                 relResource.setResourceId(resourceId);
+                relResource.setDeleted(0);
                 list.add(relResource);
             }
             aggregate.setRoleRelResourceList(list);

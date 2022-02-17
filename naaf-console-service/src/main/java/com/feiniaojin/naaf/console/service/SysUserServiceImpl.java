@@ -11,12 +11,12 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 /**
  * SysUser类Service实现类
@@ -48,6 +48,7 @@ public class SysUserServiceImpl implements SysUserService {
     private Gson gson = new Gson();
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void create(SysUserCmd cmd) {
         //根据cmd组装实体
         SysUserAggregate aggregate = factory.newFromCmd(cmd);
@@ -58,17 +59,16 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void update(SysUserCmd cmd) {
         //查询数据
-        Optional<SysUser> byId = sysUserRepository.findById(cmd.getId());
-        if (!byId.isPresent()) {
+        SysUser sysUser = sysUserMapperEx.findOne(cmd.getUid());
+        if (sysUser == null) {
             log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
             throw new SysUserExceptions.NotFoundException();
         }
         //cmd转换为实体，作为输入
         SysUser input = cmdAssembler.mapToEntity(cmd);
-        //获取数据库对应实体
-        SysUser sysUser = byId.get();
         //执行业务更新
         SysUserAggregate aggregate = factory.fromEntity(sysUser);
         aggregate.update(input);
@@ -79,16 +79,16 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public SysUserView get(SysUserQuery query) {
-       //查询数据
-       Long id = query.getId();
-       SysUser sysUser = sysUserMapper.findOneById(id);
-       if (sysUser == null) {
-           log.error("查询不到数据,query=[{}]", gson.toJson(query));
-           throw new SysUserExceptions.NotFoundException();
-       }
-       //拼接为view
-       SysUserView view = viewAssembler.mapToView(sysUser);
-       return view;
+        //查询数据
+        String uid = query.getUid();
+        SysUser sysUser = sysUserMapperEx.findOne(uid);
+        if (sysUser == null) {
+            log.error("查询不到数据,query=[{}]", gson.toJson(query));
+            throw new SysUserExceptions.NotFoundException();
+        }
+        //拼接为view
+        SysUserView view = viewAssembler.mapToView(sysUser);
+        return view;
     }
 
     @Override

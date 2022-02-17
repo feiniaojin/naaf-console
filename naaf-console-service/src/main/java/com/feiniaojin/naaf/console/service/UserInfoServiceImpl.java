@@ -55,6 +55,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         aggregate.create();
         log.info("UserInfo create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
         userInfoRepository.save(aggregate.getEntity());
+        //TODO 发布事件
     }
 
     @Override
@@ -75,20 +76,21 @@ public class UserInfoServiceImpl implements UserInfoService {
         //保存
         log.info("UserInfo update:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
         userInfoRepository.save(aggregate.getEntity());
+        //TODO 发布事件
     }
 
     @Override
     public UserInfoView get(UserInfoQuery query) {
-       //查询数据
-       Long id = query.getId();
-       UserInfo userInfo = userInfoMapper.findOneById(id);
-       if (userInfo == null) {
-           log.error("查询不到数据,query=[{}]", gson.toJson(query));
-           throw new UserInfoExceptions.NotFoundException();
-       }
-       //拼接为view
-       UserInfoView view = viewAssembler.mapToView(userInfo);
-       return view;
+        //查询数据
+        Long id = query.getId();
+        UserInfo userInfo = userInfoMapper.findOneById(id);
+        if (userInfo == null) {
+            log.error("查询不到数据,query=[{}]", gson.toJson(query));
+            throw new UserInfoExceptions.NotFoundException();
+        }
+        //拼接为view
+        UserInfoView view = viewAssembler.mapToView(userInfo);
+        return view;
     }
 
     @Override

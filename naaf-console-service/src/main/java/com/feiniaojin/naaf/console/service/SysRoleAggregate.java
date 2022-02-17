@@ -3,7 +3,10 @@ package com.feiniaojin.naaf.console.service;
 import com.feiniaojin.naaf.console.entity.SysRole;
 import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
 import lombok.Data;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +31,7 @@ public class SysRoleAggregate {
      */
     public SysRole create() {
         //初始化方法
+        entity.setDeleted(0);
         return entity;
     }
 
@@ -39,6 +43,23 @@ public class SysRoleAggregate {
      */
     public SysRole update(SysRole newEntity, List<String> resourceIdLis) {
         //更新的具体逻辑
+        if (StringUtils.isNotBlank(newEntity.getRoleName())) {
+            this.entity.setRoleName(newEntity.getRoleName());
+        }
+        this.resourceIdList = resourceIdLis;
+        if (CollectionUtils.isEmpty(resourceIdLis)) {
+            this.resourceIdList = new ArrayList<>();
+        } else {
+            List<SysRoleRelResource> list = new ArrayList<>();
+            for (String resourceId : resourceIdLis) {
+                SysRoleRelResource rel = new SysRoleRelResource();
+                rel.setRoleId(this.entity.getRoleId());
+                rel.setResourceId(resourceId);
+                rel.setDeleted(0);
+                list.add(rel);
+            }
+            this.roleRelResourceList = list;
+        }
         return entity;
     }
 }

@@ -1,6 +1,7 @@
 package com.feiniaojin.naaf.console.mapper;
 
 import com.feiniaojin.naaf.console.entity.SysRole;
+import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;
 import java.util.List;
@@ -17,6 +18,7 @@ public interface SysRoleMapperEx {
 
     /**
      * 分页查询：统计总数
+     *
      * @param paramMap
      * @return
      */
@@ -24,8 +26,17 @@ public interface SysRoleMapperEx {
 
     /**
      * 分页查询：分页获取数据
+     *
      * @param paramMap
      * @return
      */
     List<SysRole> pageList(Map<String, Object> paramMap);
+
+    /**
+     * 根据业务id查询
+     *
+     * @param bizId
+     * @return
+     */
+    SysRole findOne(@Param("roleId") Long roleId);
 }

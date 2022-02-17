@@ -19,4 +19,14 @@
         </where>
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="findOne" resultMap="com.feiniaojin.naaf.console.mapper.SysResourceMapper.BaseResultMap">
+        SELECT
+        <include refid="com.feiniaojin.naaf.console.mapper.SysResourceMapper.BaseColumn"/>
+        FROM sys_resource
+        <where>
+            resource_id=#{bizId}
+        </where>
+        LIMIT 1
+    </select>
 </mapper>

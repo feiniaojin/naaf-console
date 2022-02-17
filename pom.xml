@@ -21,6 +21,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.15</version>
+            </dependency>
+            <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
                 <artifactId>naaf-console-commons</artifactId>
                 <version>1.0-SNAPSHOT</version>

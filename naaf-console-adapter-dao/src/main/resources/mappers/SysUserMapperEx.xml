@@ -19,4 +19,15 @@
         </where>
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="findOne" resultMap="com.feiniaojin.naaf.console.mapper.SysUserMapper.BaseResultMap">
+        SELECT
+        <include refid="com.feiniaojin.naaf.console.mapper.SysUserMapper.BaseColumn"/>
+        FROM sys_user
+        <where>
+            uid=#{uid}
+        </where>
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
 </mapper>

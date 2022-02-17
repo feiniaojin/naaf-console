@@ -19,4 +19,15 @@
         </where>
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="findOne" resultMap="com.feiniaojin.naaf.console.mapper.SysRoleMapper.BaseResultMap">
+        SELECT
+        <include refid="com.feiniaojin.naaf.console.mapper.SysRoleMapper.BaseColumn"/>
+        FROM sys_role
+        <where>
+            role_id =#{roleId}
+        </where>
+        limit 1
+    </select>
+
 </mapper>

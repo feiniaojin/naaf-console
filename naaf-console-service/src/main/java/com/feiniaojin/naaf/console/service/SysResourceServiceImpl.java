@@ -63,15 +63,13 @@ public class SysResourceServiceImpl implements SysResourceService {
     @Override
     public void update(SysResourceCmd cmd) {
         //查询数据
-        Optional<SysResource> byId = sysResourceRepository.findById(cmd.getId());
-        if (!byId.isPresent()) {
+        SysResource sysResource = sysResourceMapperEx.findOne(cmd.getResourceId());
+        if (sysResource == null) {
             log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
             throw new SysResourceExceptions.NotFoundException();
         }
         //cmd转换为实体，作为输入
         SysResource input = cmdAssembler.mapToEntity(cmd);
-        //获取数据库对应实体
-        SysResource sysResource = byId.get();
         //执行业务更新
         SysResourceAggregate aggregate = factory.fromEntity(sysResource);
         aggregate.update(input);
