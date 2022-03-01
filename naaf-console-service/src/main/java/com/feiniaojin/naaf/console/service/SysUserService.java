@@ -35,8 +35,17 @@ public interface SysUserService {
 
     /**
      * 分页查询
+     *
      * @param query
      * @return
      */
     PageBean<SysUserView> pageList(SysUserQuery query);
+
+
+    /**
+     * 分配角色
+     *
+     * @param cmd
+     */
+    void assignRoles(SysUserCmd cmd);
 }

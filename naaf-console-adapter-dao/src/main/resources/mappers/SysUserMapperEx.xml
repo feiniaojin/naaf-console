@@ -20,12 +20,12 @@
         LIMIT #{offset},#{limit}
     </select>
 
-    <select id="findOne" resultMap="com.feiniaojin.naaf.console.mapper.SysUserMapper.BaseResultMap">
+    <select id="findOneByBizId" resultMap="com.feiniaojin.naaf.console.mapper.SysUserMapper.BaseResultMap">
         SELECT
         <include refid="com.feiniaojin.naaf.console.mapper.SysUserMapper.BaseColumn"/>
         FROM sys_user
         <where>
-            uid=#{uid}
+            uid=#{bizId}
         </where>
         ORDER BY id DESC
         LIMIT 1

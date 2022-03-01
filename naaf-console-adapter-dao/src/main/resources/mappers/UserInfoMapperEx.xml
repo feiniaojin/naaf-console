@@ -19,4 +19,14 @@
         </where>
         LIMIT #{offset},#{limit}
     </select>
+
+    <select id="findOneByBizId" resultMap="com.feiniaojin.naaf.console.mapper.UserInfoMapper.BaseResultMap">
+        SELECT
+        <include refid="com.feiniaojin.naaf.console.mapper.UserInfoMapper.BaseColumn"/>
+        FROM u_user_info
+        <where>
+            uid=#{bizId}
+        </where>
+        LIMIT 1
+    </select>
 </mapper>

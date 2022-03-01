@@ -1,6 +1,7 @@
 package com.feiniaojin.naaf.console.mapper;
 
 import com.feiniaojin.naaf.console.entity.SysUser;
+import com.feiniaojin.naaf.console.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;
@@ -33,10 +34,10 @@ public interface SysUserMapperEx {
     List<SysUser> pageList(Map<String, Object> paramMap);
 
     /**
-     * 通过业务id查询
+     * 根据业务id查询
      *
-     * @param uid
+     * @param bizId
      * @return
      */
-    SysUser findOne(@Param("uid") String uid);
+    SysUser findOneByBizId(@Param("bizId") String bizId);
 }

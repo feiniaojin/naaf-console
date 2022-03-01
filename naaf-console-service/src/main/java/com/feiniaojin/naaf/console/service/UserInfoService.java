@@ -35,6 +35,7 @@ public interface UserInfoService {
 
     /**
      * 分页查询
+     *
      * @param query
      * @return
      */

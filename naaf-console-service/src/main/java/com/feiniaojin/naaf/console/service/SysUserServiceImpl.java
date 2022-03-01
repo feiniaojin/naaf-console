@@ -45,6 +45,9 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserAggregateFactory factory;
 
+    @Resource
+    private SysUserAggregateRepository aggregateRepository;
+
     private Gson gson = new Gson();
 
     @Override
@@ -62,7 +65,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Transactional(rollbackFor = Exception.class)
     public void update(SysUserCmd cmd) {
         //查询数据
-        SysUser sysUser = sysUserMapperEx.findOne(cmd.getUid());
+        SysUser sysUser = sysUserMapperEx.findOneByBizId(cmd.getUid());
         if (sysUser == null) {
             log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
             throw new SysUserExceptions.NotFoundException();
@@ -81,7 +84,7 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUserView get(SysUserQuery query) {
         //查询数据
         String uid = query.getUid();
-        SysUser sysUser = sysUserMapperEx.findOne(uid);
+        SysUser sysUser = sysUserMapperEx.findOneByBizId(uid);
         if (sysUser == null) {
             log.error("查询不到数据,query=[{}]", gson.toJson(query));
             throw new SysUserExceptions.NotFoundException();
@@ -117,5 +120,24 @@ public class SysUserServiceImpl implements SysUserService {
         pageBean.setList(views);
 
         return pageBean;
+    }
+
+    @Override
+    @Transactional
+    public void assignRoles(SysUserCmd cmd) {
+        //查询数据
+        SysUser sysUser = sysUserMapperEx.findOneByBizId(cmd.getUid());
+        if (sysUser == null) {
+            log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
+            throw new SysUserExceptions.NotFoundException();
+        }
+        //cmd转换为实体，作为输入
+        SysUser input = cmdAssembler.mapToEntity(cmd);
+        //执行业务更新
+        SysUserAggregate aggregate = factory.fromEntity(sysUser);
+        aggregate.assignRoles(input);
+        log.info("SysUser assignRoles:cmd=[{}],sysUser=[{}]", gson.toJson(cmd), gson.toJson(sysUser));
+        //保存更新操作，并清理旧的资源
+        aggregateRepository.saveUpdate(aggregate);
     }
 }

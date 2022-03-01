@@ -56,20 +56,20 @@ public class UserInfoServiceImpl implements UserInfoService {
         log.info("UserInfo create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
         userInfoRepository.save(aggregate.getEntity());
         //TODO 发布事件
+
     }
 
     @Override
     public void update(UserInfoCmd cmd) {
         //查询数据
-        Optional<UserInfo> byId = userInfoRepository.findById(cmd.getId());
-        if (!byId.isPresent()) {
+        UserInfo userInfo = userInfoMapperEx.findOneByBizId(cmd.getId());
+        if (userInfo == null) {
             log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
             throw new UserInfoExceptions.NotFoundException();
         }
         //cmd转换为实体，作为输入
         UserInfo input = cmdAssembler.mapToEntity(cmd);
         //获取数据库对应实体
-        UserInfo userInfo = byId.get();
         //执行业务更新
         UserInfoAggregate aggregate = factory.fromEntity(userInfo);
         aggregate.update(input);

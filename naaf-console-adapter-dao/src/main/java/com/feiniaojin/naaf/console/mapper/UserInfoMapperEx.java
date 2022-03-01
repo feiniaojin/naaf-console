@@ -1,6 +1,7 @@
 package com.feiniaojin.naaf.console.mapper;
 
 import com.feiniaojin.naaf.console.entity.UserInfo;
+import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;
 import java.util.List;
@@ -17,6 +18,7 @@ public interface UserInfoMapperEx {
 
     /**
      * 分页查询：统计总数
+     *
      * @param paramMap
      * @return
      */
@@ -24,8 +26,17 @@ public interface UserInfoMapperEx {
 
     /**
      * 分页查询：分页获取数据
+     *
      * @param paramMap
      * @return
      */
     List<UserInfo> pageList(Map<String, Object> paramMap);
+
+    /**
+     * 根据业务id查询
+     *
+     * @param bizId
+     * @return
+     */
+    UserInfo findOneByBizId(@Param("bizId") Long bizId);
 }

@@ -64,4 +64,8 @@ public class SysUserAggregate {
         }
         return entity;
     }
+
+    public void assignRoles(SysUser input) {
+
+    }
 }

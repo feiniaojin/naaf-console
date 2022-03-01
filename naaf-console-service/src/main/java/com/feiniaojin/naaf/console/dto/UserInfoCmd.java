@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 表名称：u_user_info
@@ -25,4 +26,5 @@ public class UserInfoCmd implements Serializable {
     private String modifiedBy;
     private Date modifiedTime;
     private Long version;
+    private List<String> roleIds;
 }
