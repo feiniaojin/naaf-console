@@ -29,7 +29,7 @@ public class SysUserRelRole implements Serializable {
     /**
      * 角色id
      */
-    private Long roleId;
+    private String roleId;
     /**
      * 用户uid
      */

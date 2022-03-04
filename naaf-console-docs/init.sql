@@ -35,8 +35,8 @@ CREATE TABLE `u_user_info` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '用户信息表';
 CREATE TABLE `sys_resource` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
-    `resource_id` bigint NOT NULL COMMENT '资源id',
-    `parent_resource_id` bigint NOT NULL DEFAULT 0 COMMENT '父资源id',
+    `resource_id` varchar(64) NOT NULL COMMENT '资源id',
+    `parent_resource_id` varchar(64) NOT NULL DEFAULT 0 COMMENT '父资源id',
     `path` varchar(64) NULL COMMENT '资源路径',
     `mapping_method` varchar(64) NULL COMMENT 'java类中RequestMapping对应的方法',
     `http_method` varchar(64) NULL COMMENT 'http请求的方法',
@@ -53,7 +53,7 @@ CREATE TABLE `sys_resource` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '受限资源表';
 CREATE TABLE `sys_role` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
-    `role_id` bigint NOT NULL COMMENT '角色id',
+    `role_id` varchar(64) NOT NULL COMMENT '角色id',
     `role_name` varchar(64) NULL COMMENT '角色名称',
     `deleted` int NULL DEFAULT 0 COMMENT '逻辑删除标记[0-正常；1-已删除]',
     `created_by` VARCHAR(100) COMMENT '创建人',
@@ -66,7 +66,7 @@ CREATE TABLE `sys_role` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色表';
 CREATE TABLE `sys_role_rel_resource` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
-    `role_id` bigint NOT NULL COMMENT '角色id',
+    `role_id` varchar(64) NOT NULL COMMENT '角色id',
     `resource_id` varchar(64) NULL COMMENT '资源id',
     `deleted` int NULL DEFAULT 0 COMMENT '逻辑删除标记[0-正常；1-已删除]',
     `created_by` VARCHAR(100) COMMENT '创建人',
@@ -79,7 +79,7 @@ CREATE TABLE `sys_role_rel_resource` (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '角色与受限资源关联表';
 CREATE TABLE `sys_user_rel_role` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键，业务不用',
-    `role_id` bigint NOT NULL COMMENT '角色id',
+    `role_id` varchar(64) NOT NULL COMMENT '角色id',
     `uid` varchar(64) NULL COMMENT '用户uid',
     `deleted` int NULL DEFAULT 0 COMMENT '逻辑删除标记[0-正常；1-已删除]',
     `created_by` VARCHAR(100) COMMENT '创建人',

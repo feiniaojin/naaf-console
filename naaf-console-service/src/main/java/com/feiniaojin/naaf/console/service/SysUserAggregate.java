@@ -1,6 +1,7 @@
 package com.feiniaojin.naaf.console.service;
 
 import com.feiniaojin.naaf.console.entity.SysUser;
+import com.feiniaojin.naaf.console.entity.SysUserRelRole;
 import lombok.Data;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
@@ -22,7 +23,12 @@ public class SysUserAggregate {
     /**
      * 用户拥有的角色
      */
-    private List<SysRoleAggregate> roleAggregates;
+    private List<String> roleIdList;
+
+    /**
+     * 用户拥有的角色
+     */
+    private List<SysUserRelRole> userRelRoleList;
 
     /**
      * 执行初始化逻辑

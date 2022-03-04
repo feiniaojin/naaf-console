@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.feiniaojin.naaf.console.mapper.SysUserRelRoleMapperEx">
+
+    <select id="pageListTotal" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM sys_user_rel_role
+        <where>
+
+        </where>
+    </select>
+
+    <select id="pageList" resultMap="com.feiniaojin.naaf.console.mapper.SysUserRelRoleMapper.BaseResultMap">
+        SELECT
+        <include refid="com.feiniaojin.naaf.console.mapper.SysUserRelRoleMapper.BaseColumn"/>
+        FROM sys_user_rel_role
+        <where>
+
+        </where>
+        LIMIT #{offset},#{limit}
+    </select>
+</mapper>
