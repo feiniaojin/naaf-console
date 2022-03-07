@@ -12,28 +12,44 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 表名称：sys_role_rel_resource
- * 表注释：角色与受限资源关联表
+ * 表名称：u_user_info_event
+ * 表注释：用户信息表
  * NOTICE:本文件由代码生成器naaf-generator生成，不要在本文件手工追加任何内容，因为随时可能重新生成替换
  * github：https://github.com/feiniaojin/naaf-generator
  */
 @Data
-@Table("sys_role_rel_resource")
+@Table("u_user_info_event")
 @Generated("generator")
-public class SysRoleRelResource implements Serializable {
+public class UserInfoEvent implements Serializable {
     /**
      * 自增主键,业务不用
      */
     @Id
     private Long id;
     /**
-     * 角色id
+     * 账号,业务使用
      */
-    private String roleId;
+    private String uid;
     /**
-     * 资源id
+     * 事件id
      */
-    private String resourceId;
+    private String eventId;
+    /**
+     * 手机号
+     */
+    private String mobilePhone;
+    /**
+     * 邮箱
+     */
+    private String email;
+    /**
+     * 用户名
+     */
+    private String userName;
+    /**
+     * 头像
+     */
+    private String profileImgUrl;
     /**
      * 逻辑删除标记[0-正常;1-已删除]
      */

@@ -38,5 +38,5 @@ public interface SysResourceMapperEx {
      * @param bizId
      * @return
      */
-    SysResource findOne(@Param("bizId") Long bizId);
+    SysResource findOne(@Param("bizId") String bizId);
 }

@@ -5,7 +5,6 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.annotation.Version;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.annotation.Generated;
@@ -23,18 +22,18 @@ import java.util.Date;
 @Generated("generator")
 public class SysResource implements Serializable {
     /**
-     * 自增主键，业务不用
+     * 自增主键,业务不用
      */
     @Id
     private Long id;
     /**
      * 资源id
      */
-    private Long resourceId;
+    private String resourceId;
     /**
      * 父资源id
      */
-    private Long parentResourceId;
+    private String parentResourceId;
     /**
      * 资源路径
      */
@@ -56,7 +55,7 @@ public class SysResource implements Serializable {
      */
     private Integer visible;
     /**
-     * 逻辑删除标记[0-正常；1-已删除]
+     * 逻辑删除标记[0-正常;1-已删除]
      */
     private Integer deleted;
     /**

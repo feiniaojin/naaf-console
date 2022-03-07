@@ -89,8 +89,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     @Override
     public SysRoleView get(SysRoleQuery query) {
         //查询数据
-        Long id = query.getId();
-        SysRole sysRole = sysRoleMapper.findOneById(id);
+        String roleId = query.getRoleId();
+        SysRole sysRole = sysRoleMapperEx.findOne(roleId);
         if (sysRole == null) {
             log.error("查询不到数据,query=[{}]", gson.toJson(query));
             throw new SysRoleExceptions.NotFoundException();

@@ -22,7 +22,7 @@ import java.util.Date;
 @Generated("generator")
 public class SysUserRelRole implements Serializable {
     /**
-     * 自增主键，业务不用
+     * 自增主键,业务不用
      */
     @Id
     private Long id;
@@ -35,7 +35,7 @@ public class SysUserRelRole implements Serializable {
      */
     private String uid;
     /**
-     * 逻辑删除标记[0-正常；1-已删除]
+     * 逻辑删除标记[0-正常;1-已删除]
      */
     private Integer deleted;
     /**
@@ -45,7 +45,7 @@ public class SysUserRelRole implements Serializable {
     /**
      * 创建时间
      */
-    @CreatedDate
+     @CreatedDate
     private Date createdTime;
     /**
      * 更新人

@@ -22,12 +22,12 @@ import java.util.Date;
 @Generated("generator")
 public class UserInfo implements Serializable {
     /**
-     * 自增主键，业务不用
+     * 自增主键,业务不用
      */
     @Id
     private Long id;
     /**
-     * 账号，业务使用
+     * 账号,业务使用
      */
     private String uid;
     /**
@@ -47,7 +47,7 @@ public class UserInfo implements Serializable {
      */
     private String profileImgUrl;
     /**
-     * 逻辑删除标记[0-正常；1-已删除]
+     * 逻辑删除标记[0-正常;1-已删除]
      */
     private Integer deleted;
     /**
@@ -68,6 +68,22 @@ public class UserInfo implements Serializable {
      */
     @LastModifiedDate
     private Date modifiedTime;
+    /**
+     * 拉链表记录生效时间
+     */
+    private Date evsStartTime;
+    /**
+     * 拉链表记录失效时间
+     */
+    private Date evsEndTime;
+    /**
+     * 拉链表记录生成操作标识,用于记录该记录生成的原因,insert/update/delete
+     */
+    private String evsOprate;
+    /**
+     * 拉链表记录对应的事件id
+     */
+    private String evsEventId;
     /**
      * 乐观锁
      */

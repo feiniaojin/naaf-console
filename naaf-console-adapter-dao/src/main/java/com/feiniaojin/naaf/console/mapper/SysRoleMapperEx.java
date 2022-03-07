@@ -38,5 +38,5 @@ public interface SysRoleMapperEx {
      * @param bizId
      * @return
      */
-    SysRole findOne(@Param("roleId") Long roleId);
+    SysRole findOne(@Param("roleId") String roleId);
 }

@@ -81,8 +81,8 @@ public class SysResourceServiceImpl implements SysResourceService {
     @Override
     public SysResourceView get(SysResourceQuery query) {
         //查询数据
-        Long id = query.getId();
-        SysResource sysResource = sysResourceMapper.findOneById(id);
+        String resourceId = query.getResourceId();
+        SysResource sysResource = sysResourceMapperEx.findOne(resourceId);
         if (sysResource == null) {
             log.error("查询不到数据,query=[{}]", gson.toJson(query));
             throw new SysResourceExceptions.NotFoundException();

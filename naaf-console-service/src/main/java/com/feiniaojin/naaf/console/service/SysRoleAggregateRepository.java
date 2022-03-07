@@ -33,7 +33,7 @@ public class SysRoleAggregateRepository {
 
     public void saveUpdate(SysRoleAggregate aggregate) {
 
-        Long roleId = aggregate.getEntity().getRoleId();
+        String roleId = aggregate.getEntity().getRoleId();
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("roleId", roleId);
         List<SysRoleRelResource> list = relResourceMapperEx.list(paramMap);

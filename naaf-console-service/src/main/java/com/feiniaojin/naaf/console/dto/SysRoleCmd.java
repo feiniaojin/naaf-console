@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 public class SysRoleCmd implements Serializable {
     private Long id;
-    private Long roleId;
+    private String roleId;
     private String roleName;
     private Integer deleted;
     private String createdBy;

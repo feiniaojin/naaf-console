@@ -14,8 +14,8 @@ import java.util.Date;
 @Data
 public class SysResourceView implements Serializable {
     private Long id;
-    private Long resourceId;
-    private Long parentResourceId;
+    private String resourceId;
+    private String parentResourceId;
     private String path;
     private String mappingMethod;
     private String httpMethod;

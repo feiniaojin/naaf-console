@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class SysRoleView implements Serializable {
     private Long id;
-    private Long roleId;
+    private String roleId;
     private String roleName;
     private Integer deleted;
     private String createdBy;

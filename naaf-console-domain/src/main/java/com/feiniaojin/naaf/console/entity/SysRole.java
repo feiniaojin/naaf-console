@@ -22,20 +22,20 @@ import java.util.Date;
 @Generated("generator")
 public class SysRole implements Serializable {
     /**
-     * 自增主键，业务不用
+     * 自增主键,业务不用
      */
     @Id
     private Long id;
     /**
      * 角色id
      */
-    private Long roleId;
+    private String roleId;
     /**
      * 角色名称
      */
     private String roleName;
     /**
-     * 逻辑删除标记[0-正常；1-已删除]
+     * 逻辑删除标记[0-正常;1-已删除]
      */
     private Integer deleted;
     /**

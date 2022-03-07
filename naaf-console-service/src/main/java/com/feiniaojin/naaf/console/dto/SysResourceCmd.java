@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class SysResourceCmd implements Serializable {
     private Long id;
-    private Long resourceId;
+    private String resourceId;
     private Long parentResourceId;
     private String path;
     private String mappingMethod;

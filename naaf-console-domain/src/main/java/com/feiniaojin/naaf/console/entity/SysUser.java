@@ -22,12 +22,12 @@ import java.util.Date;
 @Generated("generator")
 public class SysUser implements Serializable {
     /**
-     * 自增主键，业务不用
+     * 自增主键,业务不用
      */
     @Id
     private Long id;
     /**
-     * 账号，业务使用
+     * 账号,业务使用
      */
     private String uid;
     /**
@@ -51,11 +51,11 @@ public class SysUser implements Serializable {
      */
     private String salt;
     /**
-     * 账号状态[0-正常；1-已冻结]
+     * 账号状态[0-正常;1-已冻结]
      */
     private Integer status;
     /**
-     * 逻辑删除标记[0-正常；1-已删除]
+     * 逻辑删除标记[0-正常;1-已删除]
      */
     private Integer deleted;
     /**
