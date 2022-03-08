@@ -1,10 +1,10 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.dto.SysRoleCmd;
-import com.feiniaojin.naaf.console.dto.SysRoleQuery;
-import com.feiniaojin.naaf.console.dto.SysRoleView;
-import com.feiniaojin.naaf.console.service.SysRoleService;
+import com.feiniaojin.naaf.console.sys.dto.SysRoleCmd;
+import com.feiniaojin.naaf.console.sys.dto.SysRoleQuery;
+import com.feiniaojin.naaf.console.sys.dto.SysRoleView;
+import com.feiniaojin.naaf.console.sys.service.SysRoleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -157,7 +157,8 @@
         <module>naaf-console-adapter-mq-publisher</module>
         <module>naaf-console-domain</module>
         <module>naaf-console-commons</module>
-        <module>naaf-console-adapter-id</module>
+        <module>naaf-console-integration-id</module>
         <module>naaf-console-test</module>
+        <module>naaf-console-integration-xxlmq</module>
     </modules>
 </project>

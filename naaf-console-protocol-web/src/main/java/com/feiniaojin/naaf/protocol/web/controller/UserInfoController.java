@@ -1,10 +1,10 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.dto.UserInfoCmd;
-import com.feiniaojin.naaf.console.dto.UserInfoQuery;
-import com.feiniaojin.naaf.console.dto.UserInfoView;
-import com.feiniaojin.naaf.console.service.UserInfoService;
+import com.feiniaojin.naaf.console.evs.dto.UserInfoCmd;
+import com.feiniaojin.naaf.console.evs.dto.UserInfoQuery;
+import com.feiniaojin.naaf.console.evs.dto.UserInfoView;
+import com.feiniaojin.naaf.console.evs.service.UserInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

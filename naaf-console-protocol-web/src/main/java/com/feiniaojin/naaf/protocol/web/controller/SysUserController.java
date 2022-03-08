@@ -1,10 +1,10 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.dto.SysUserCmd;
-import com.feiniaojin.naaf.console.dto.SysUserQuery;
-import com.feiniaojin.naaf.console.dto.SysUserView;
-import com.feiniaojin.naaf.console.service.SysUserService;
+import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
+import com.feiniaojin.naaf.console.sys.dto.SysUserQuery;
+import com.feiniaojin.naaf.console.sys.dto.SysUserView;
+import com.feiniaojin.naaf.console.sys.service.SysUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

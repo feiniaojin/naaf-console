@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.console.test.resource;
 
-import com.feiniaojin.naaf.console.dto.SysResourceCmd;
-import com.feiniaojin.naaf.console.dto.SysResourceQuery;
-import com.feiniaojin.naaf.console.dto.SysResourceView;
-import com.feiniaojin.naaf.console.service.SysResourceService;
+import com.feiniaojin.naaf.console.sys.dto.SysResourceCmd;
+import com.feiniaojin.naaf.console.sys.dto.SysResourceQuery;
+import com.feiniaojin.naaf.console.sys.dto.SysResourceView;
+import com.feiniaojin.naaf.console.sys.service.SysResourceService;
 import com.feiniaojin.naaf.console.test.AbstractBaseTest;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;

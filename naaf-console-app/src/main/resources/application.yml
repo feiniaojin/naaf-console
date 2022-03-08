@@ -22,5 +22,5 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 10000
 mybatis:
-  mapper-locations: classpath:mappers/*.xml,classpath:META-INF/mybatis/mapper/*.xml
+  mapper-locations: classpath:mappers/*.xml,classpath:META-INF/mybatis/mapper/*.xml,classpath:mybatis-mapper/*.xml
   type-aliases-package: com.feiniaojin.naaf.console.entity
