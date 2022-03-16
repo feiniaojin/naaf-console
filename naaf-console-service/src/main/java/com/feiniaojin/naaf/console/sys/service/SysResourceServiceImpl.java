@@ -1,7 +1,7 @@
 package com.feiniaojin.naaf.console.sys.service;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.adapter.id.IdGeneratorAdapter;
+import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
 import com.feiniaojin.naaf.console.entity.SysResource;
 import com.feiniaojin.naaf.console.sys.dto.*;
 import com.feiniaojin.naaf.console.sys.exception.SysResourceExceptions;
@@ -37,7 +37,7 @@ public class SysResourceServiceImpl implements SysResourceService {
     private SysResourceRepository sysResourceRepository;
 
     @Resource
-    private IdGeneratorAdapter idGeneratorAdapter;
+    private IdGeneratorIntegration idGeneratorIntegration;
 
     @Resource
     private SysResourceCmdAssembler cmdAssembler;

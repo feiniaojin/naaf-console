@@ -1,10 +1,10 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.evs.dto.UserInfoCmd;
-import com.feiniaojin.naaf.console.evs.dto.UserInfoQuery;
-import com.feiniaojin.naaf.console.evs.dto.UserInfoView;
-import com.feiniaojin.naaf.console.evs.service.UserInfoService;
+import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoCmd;
+import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoQuery;
+import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoView;
+import com.feiniaojin.naaf.console.uinfo.query.UserInfoService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +16,7 @@ import javax.annotation.Resource;
  * 表注释：用户信息表
  */
 @RestController
-@RequestMapping("/uinfo")
+@RequestMapping("/userInfo")
 public class UserInfoController {
     @Resource
     private UserInfoService userInfoService;

@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.sys.service;
 
-import com.feiniaojin.naaf.console.adapter.id.IdGeneratorAdapter;
+import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
 import com.feiniaojin.naaf.console.sys.dto.SysResourceCmd;
 import com.feiniaojin.naaf.console.sys.dto.SysResourceCmdAssembler;
 import com.feiniaojin.naaf.console.entity.SysResource;
@@ -18,7 +18,7 @@ public class SysResourceAggregateFactory {
     private SysResourceCmdAssembler cmdAssembler;
 
     @Resource
-    private IdGeneratorAdapter idGeneratorAdapter;
+    private IdGeneratorIntegration idGeneratorIntegration;
 
     /**
      * 根据cmd对象创建新的实体
@@ -29,7 +29,7 @@ public class SysResourceAggregateFactory {
     public SysResourceAggregate newFromCmd(SysResourceCmd cmd) {
         //根据cmd组装实体
         SysResource mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setResourceId(String.valueOf(idGeneratorAdapter.getUid()));
+        mapToEntity.setResourceId(String.valueOf(idGeneratorIntegration.getUid()));
         SysResourceAggregate aggregate = new SysResourceAggregate();
         aggregate.setEntity(mapToEntity);
         return aggregate;

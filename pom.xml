@@ -16,10 +16,16 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <pulsar.version>2.9.1</pulsar.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.apache.pulsar</groupId>
+                <artifactId>pulsar-client</artifactId>
+                <version>${pulsar.version}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
@@ -159,6 +165,6 @@
         <module>naaf-console-commons</module>
         <module>naaf-console-integration-id</module>
         <module>naaf-console-test</module>
-        <module>naaf-console-integration-xxlmq</module>
+        <module>naaf-console-lifecycle</module>
     </modules>
 </project>

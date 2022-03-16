@@ -1,9 +1,9 @@
-package com.feiniaojin.naaf.console.sys.service;
+package com.feiniaojin.naaf.console.uinfo.query;
 
 import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmdAssembler;
-import com.feiniaojin.naaf.console.entity.SysUser;
+import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoCmd;
+import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoCmdAssembler;
+import com.feiniaojin.naaf.console.entity.UserInfo;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -12,10 +12,10 @@ import javax.annotation.Resource;
  * 工厂存在的原因是解决复杂对象的创建问题，例如为对象的id属性赋值
  */
 @Component
-public class SysUserAggregateFactory {
+public class UserInfoAggregateFactory {
 
     @Resource
-    private SysUserCmdAssembler cmdAssembler;
+    private UserInfoCmdAssembler cmdAssembler;
 
     @Resource
     private IdGeneratorIntegration idGeneratorIntegration;
@@ -26,11 +26,11 @@ public class SysUserAggregateFactory {
      * @param cmd
      * @return
      */
-    public SysUserAggregate newFromCmd(SysUserCmd cmd) {
+    public UserInfoAggregate newFromCmd(UserInfoCmd cmd) {
         //根据cmd组装实体
-        SysUser mapToEntity = cmdAssembler.mapToEntity(cmd);
+        UserInfo mapToEntity = cmdAssembler.mapToEntity(cmd);
         mapToEntity.setUid(String.valueOf(idGeneratorIntegration.getUid()));
-        SysUserAggregate aggregate = new SysUserAggregate();
+        UserInfoAggregate aggregate = new UserInfoAggregate();
         aggregate.setEntity(mapToEntity);
         return aggregate;
     }
@@ -41,8 +41,8 @@ public class SysUserAggregateFactory {
      * @param newEntity
      * @return
      */
-    public SysUserAggregate fromEntity(SysUser newEntity) {
-        SysUserAggregate aggregate = new SysUserAggregate();
+    public UserInfoAggregate fromEntity(UserInfo newEntity) {
+        UserInfoAggregate aggregate = new UserInfoAggregate();
         aggregate.setEntity(newEntity);
         return aggregate;
     }

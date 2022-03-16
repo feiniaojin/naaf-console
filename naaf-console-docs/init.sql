@@ -1,4 +1,7 @@
 --初始化SQL
+CREATE DATABASE naaf_console
+    DEFAULT CHARACTER SET = 'utf8mb4';
+
 CREATE TABLE `sys_user` (
     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '自增主键,业务不用',
     `uid` varchar(64) NULL COMMENT '账号,业务使用',
