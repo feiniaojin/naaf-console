@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>naaf-console-protocol-mq-listener</artifactId>
+    <artifactId>naaf-console-ohs-rpc-provider</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

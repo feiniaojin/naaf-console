@@ -19,8 +19,8 @@ public class UserInfoEventController {
     @Resource
     private UserInfoEventService userInfoEventService;
 
-    @RequestMapping("/create")
-    public void create(@RequestBody UserInfoEventCmd command) {
+    @RequestMapping("/accept")
+    public void accept(@RequestBody UserInfoEventCmd command) {
         userInfoEventService.handleEvent(command);
     }
 }

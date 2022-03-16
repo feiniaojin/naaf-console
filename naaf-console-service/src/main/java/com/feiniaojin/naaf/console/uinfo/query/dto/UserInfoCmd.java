@@ -28,4 +28,5 @@ public class UserInfoCmd implements Serializable {
     private Long version;
     private List<String> roleIds;
     private String eventType;
+    private String eventId;
 }

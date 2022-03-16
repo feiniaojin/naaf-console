@@ -22,6 +22,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.22</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.pulsar</groupId>
                 <artifactId>pulsar-client</artifactId>
                 <version>${pulsar.version}</version>
@@ -78,22 +83,22 @@
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-protocol-rpc-provider</artifactId>
+                <artifactId>naaf-console-ohs-rpc-provider</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-protocol-mq-listener</artifactId>
+                <artifactId>naaf-console-ohs-mq-listener</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-protocol-schedule</artifactId>
+                <artifactId>naaf-console-ohs-schedule</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-protocol-web</artifactId>
+                <artifactId>naaf-console-ohs-web</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -144,18 +149,60 @@
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>1.4.2.Final</version>
+                            </path>
+                            <dependency>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>1.18.22</version>
+                            </dependency>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok-mapstruct-binding</artifactId>
+                                <version>0.2.0</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-archetype-plugin</artifactId>
                     <version>3.2.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <configuration>
+                        <layers>
+                            <enabled>true</enabled>
+                        </layers>
+                        <excludes>
+                            <!-- 打包的时候忽略lombok，因为lombok值在编译器起作用 -->
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
     </build>
     <modules>
         <module>naaf-console-app</module>
-        <module>naaf-console-protocol-web</module>
-        <module>naaf-console-protocol-schedule</module>
-        <module>naaf-console-protocol-rpc-provider</module>
-        <module>naaf-console-protocol-mq-listener</module>
+        <module>naaf-console-ohs-web</module>
+        <module>naaf-console-ohs-schedule</module>
+        <module>naaf-console-ohs-rpc-provider</module>
+        <module>naaf-console-ohs-mq-listener</module>
         <module>naaf-console-service</module>
         <module>naaf-console-adapter-dao</module>
         <module>naaf-console-adapter-http</module>

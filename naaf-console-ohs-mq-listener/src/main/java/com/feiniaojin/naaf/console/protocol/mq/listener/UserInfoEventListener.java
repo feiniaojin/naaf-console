@@ -34,11 +34,10 @@ public class UserInfoEventListener implements MessageListener {
             System.out.println("Message received: " + new String(msg.getData()));
             String s = new String(msg.getData());
             UserInfoCmd userInfoCmd = gson.fromJson(s, UserInfoCmd.class);
-
             eventQueryHandler.handle(userInfoCmd);
             consumer.acknowledge(msg);
         } catch (Exception e) {
-            log.error("消费消息发生异常,msg=[{}]", gson.toJson(msg), e);
+            log.error("消费消息发生异常,msg=[{}]", gson.toJson(new String(msg.getData())), e);
             consumer.negativeAcknowledge(msg);
         }
     }

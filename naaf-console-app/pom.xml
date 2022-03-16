@@ -26,19 +26,19 @@
         </dependency>
         <dependency>
             <groupId>com.feiniaojin.naaf</groupId>
-            <artifactId>naaf-console-protocol-mq-listener</artifactId>
+            <artifactId>naaf-console-ohs-mq-listener</artifactId>
         </dependency>
         <dependency>
             <groupId>com.feiniaojin.naaf</groupId>
-            <artifactId>naaf-console-protocol-rpc-provider</artifactId>
+            <artifactId>naaf-console-ohs-rpc-provider</artifactId>
         </dependency>
         <dependency>
             <groupId>com.feiniaojin.naaf</groupId>
-            <artifactId>naaf-console-protocol-schedule</artifactId>
+            <artifactId>naaf-console-ohs-schedule</artifactId>
         </dependency>
         <dependency>
             <groupId>com.feiniaojin.naaf</groupId>
-            <artifactId>naaf-console-protocol-web</artifactId>
+            <artifactId>naaf-console-ohs-web</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

@@ -38,5 +38,5 @@ public interface UserInfoMapperEx {
      * @param bizId
      * @return
      */
-    UserInfo findOneByBizId(@Param("bizId") Long bizId);
+    UserInfo findCurrentByBizId(@Param("bizId") String bizId);
 }

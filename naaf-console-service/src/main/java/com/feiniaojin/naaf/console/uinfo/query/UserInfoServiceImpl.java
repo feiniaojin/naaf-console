@@ -8,11 +8,14 @@ import com.feiniaojin.naaf.console.mapper.UserInfoMapper;
 import com.feiniaojin.naaf.console.mapper.UserInfoMapperEx;
 import com.feiniaojin.naaf.console.repository.UserInfoRepository;
 import com.google.gson.Gson;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,22 +62,26 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    @Transactional
     public void update(UserInfoCmd cmd) {
         //查询数据
-        UserInfo userInfo = userInfoMapperEx.findOneByBizId(cmd.getId());
+        UserInfo userInfo = userInfoMapperEx.findCurrentByBizId(cmd.getUid());
         if (userInfo == null) {
             log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
             throw new UserInfoExceptions.NotFoundException();
         }
         //cmd转换为实体，作为输入
         UserInfo input = cmdAssembler.mapToEntity(cmd);
-        //获取数据库对应实体
-        //执行业务更新
         UserInfoAggregate aggregate = factory.fromEntity(userInfo);
-        aggregate.update(input);
+        UserInfoAggregate newAggregate = factory.newSnapshot(aggregate);
+        Date nowTime = new Date();
+        aggregate.closeSnapshot(nowTime);
+
+        newAggregate.update(input,nowTime);
         //保存
         log.info("UserInfo update:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
         userInfoRepository.save(aggregate.getEntity());
+        userInfoRepository.save(newAggregate.getEntity());
         //TODO 发布事件
     }
 

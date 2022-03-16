@@ -13,7 +13,7 @@ import java.util.Date;
 
 /**
  * 表名称：u_user_info_event
- * 表注释：用户信息表
+ * 表注释：用户信息表事件
  * NOTICE:本文件由代码生成器naaf-generator生成，不要在本文件手工追加任何内容，因为随时可能重新生成替换
  * github：https://github.com/feiniaojin/naaf-generator
  */
@@ -34,6 +34,10 @@ public class UserInfoEvent implements Serializable {
      * 事件id
      */
     private String eventId;
+    /**
+     * 事件类型
+     */
+    private String eventType;
     /**
      * 手机号
      */

@@ -17,7 +17,7 @@ public class UserInfoCmdAssembler {
 
     public UserInfo mapToEntity(UserInfoCmd cmd) {
         UserInfo userInfo = UserInfoCmdMapper.INSTANCE.mapToEntity(cmd);
-        //TODO 完成装配逻辑，作为mapstruct的补充，避免将逻辑泄露到service中
+        userInfo.setEvsEventId(cmd.getEventId());
         return userInfo;
     }
 

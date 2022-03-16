@@ -4,9 +4,11 @@ import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
 import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoCmd;
 import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoCmdAssembler;
 import com.feiniaojin.naaf.console.entity.UserInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * 工厂存在的原因是解决复杂对象的创建问题，例如为对象的id属性赋值
@@ -45,5 +47,22 @@ public class UserInfoAggregateFactory {
         UserInfoAggregate aggregate = new UserInfoAggregate();
         aggregate.setEntity(newEntity);
         return aggregate;
+    }
+
+    /**
+     * 聚合克隆
+     *
+     * @param aggregate
+     * @return
+     */
+    public UserInfoAggregate newSnapshot(UserInfoAggregate aggregate) {
+        UserInfoAggregate cloneAggregate = new UserInfoAggregate();
+        UserInfo entity = aggregate.getEntity();
+        UserInfo newEntity = new UserInfo();
+        BeanUtils.copyProperties(entity, newEntity);
+        newEntity.setId(null);
+        newEntity.setVersion(null);
+        cloneAggregate.setEntity(newEntity);
+        return cloneAggregate;
     }
 }

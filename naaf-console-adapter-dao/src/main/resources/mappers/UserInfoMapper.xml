@@ -17,6 +17,11 @@
         <result column="created_time" property="createdTime"/>
         <result column="modified_by" property="modifiedBy"/>
         <result column="modified_time" property="modifiedTime"/>
+        <result column="evs_start_time" property="evsStartTime"/>
+        <result column="evs_end_time" property="evsEndTime"/>
+        <result column="evs_mark" property="evsMark"/>
+        <result column="evs_current" property="evsCurrent"/>
+        <result column="evs_event_id" property="evsEventId"/>
         <result column="version" property="version"/>
     </resultMap>
     <sql id="BaseColumn">
@@ -31,6 +36,11 @@
         created_time,
         modified_by,
         modified_time,
+        evs_start_time,
+        evs_end_time,
+        evs_mark,
+        evs_current,
+        evs_event_id,
         version
     </sql>
     <insert id="insert" parameterType="com.feiniaojin.naaf.console.entity.UserInfo">
@@ -46,6 +56,11 @@
         created_time,
         modified_by,
         modified_time,
+        evs_start_time,
+        evs_end_time,
+        evs_mark,
+        evs_current,
+        evs_event_id,
         version
         )
         <trim prefix="values (" suffix=")">
@@ -60,6 +75,11 @@
             #{createdTime},
             #{modifiedBy},
             #{modifiedTime},
+            #{evsStartTime},
+            #{evsEndTime},
+            #{evsMark},
+            #{evsCurrent},
+            #{evsEventId},
             #{version}
         </trim>
     </insert>

@@ -79,7 +79,11 @@ public class UserInfo implements Serializable {
     /**
      * 拉链表记录生成操作标识,用于记录该记录生成的原因,insert/update/delete
      */
-    private String evsOprate;
+    private String evsMark;
+    /**
+     * 拉链表当前记录,默认为1,非当前则为0
+     */
+    private Integer evsCurrent;
     /**
      * 拉链表记录对应的事件id
      */
