@@ -1,12 +1,14 @@
 package com.feiniaojin.naaf.console.sys.service;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
+import com.feiniaojin.naaf.console.adapter.mq.publisher.PulsarPublisher;
 import com.feiniaojin.naaf.console.entity.SysUser;
-import com.feiniaojin.naaf.console.sys.dto.*;
-import com.feiniaojin.naaf.console.sys.exception.SysUserExceptions;
 import com.feiniaojin.naaf.console.mapper.SysUserMapper;
 import com.feiniaojin.naaf.console.mapper.SysUserMapperEx;
 import com.feiniaojin.naaf.console.repository.SysUserRepository;
+import com.feiniaojin.naaf.console.sys.dto.*;
+import com.feiniaojin.naaf.console.sys.events.SysUserEvent;
+import com.feiniaojin.naaf.console.sys.exception.SysUserExceptions;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +51,9 @@ public class SysUserServiceImpl implements SysUserService {
     @Resource
     private SysUserAggregateRepository aggregateRepository;
 
+    @Resource(name = "sysUserPublisher")
+    private PulsarPublisher sysUserPublisher;
+
     private Gson gson = new Gson();
 
     @Override
@@ -59,6 +65,14 @@ public class SysUserServiceImpl implements SysUserService {
         aggregate.create();
         log.info("SysUser create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
         sysUserRepository.save(aggregate.getEntity());
+
+        SysUserEvent event = SysUserEvent.builder()
+                .uid(aggregate.getEntity().getUid())
+                .userName(aggregate.getEntity().getUserName())
+                .mobilePhone(aggregate.getEntity().getMobilePhone())
+                .email(aggregate.getEntity().getEmail())
+                .eventType("create").build();
+        sysUserPublisher.send(gson.toJson(event).getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -78,6 +92,14 @@ public class SysUserServiceImpl implements SysUserService {
         //保存
         log.info("SysUser update:cmd=[{}],sysUser=[{}]", gson.toJson(cmd), gson.toJson(sysUser));
         sysUserRepository.save(aggregate.getEntity());
+
+        SysUserEvent event = SysUserEvent.builder()
+                .uid(aggregate.getEntity().getUid())
+                .userName(aggregate.getEntity().getUserName())
+                .mobilePhone(aggregate.getEntity().getMobilePhone())
+                .email(aggregate.getEntity().getEmail())
+                .eventType("update").build();
+        sysUserPublisher.send(gson.toJson(event).getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

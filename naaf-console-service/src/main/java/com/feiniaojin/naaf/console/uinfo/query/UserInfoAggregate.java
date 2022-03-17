@@ -57,7 +57,7 @@ public class UserInfoAggregate {
         }
 
         this.entity.setEvsEventId(newEntity.getEvsEventId());
-        this.entity.setEvsMark(newEntity.getEvsMark());
+        this.entity.setEvsMark("update");
         this.entity.setEvsEndTime(NaafDateUtil.END_DATE);
         this.entity.setEvsStartTime(nowTime);
         this.entity.setEvsCurrent(1);

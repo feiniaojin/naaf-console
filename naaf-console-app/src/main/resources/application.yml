@@ -29,4 +29,7 @@ pulsar:
   service:
       url: pulsar://localhost:6650
   topic:
-    user_info_event: my-topic
+    # 用户信息的evs事件主题
+    evs_user_info_event: topic_evs_user_info
+    # 用户信息事件主题，给sys_user消费用于创建和更新账号
+    user_info_event: topic_user_info

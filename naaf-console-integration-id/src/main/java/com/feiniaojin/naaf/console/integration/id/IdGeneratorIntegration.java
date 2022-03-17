@@ -15,7 +15,11 @@ public class IdGeneratorIntegration {
     @Resource
     private UidGenerator uidGenerator;
 
-    public long getUid() {
+    public long getLongUid() {
         return uidGenerator.getUID();
+    }
+
+    public String getStringUid() {
+        return String.valueOf(uidGenerator.getUID());
     }
 }

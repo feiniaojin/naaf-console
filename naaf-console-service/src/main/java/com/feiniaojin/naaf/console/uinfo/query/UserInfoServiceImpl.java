@@ -1,20 +1,21 @@
 package com.feiniaojin.naaf.console.uinfo.query;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
+import com.feiniaojin.naaf.console.adapter.mq.publisher.PulsarPublisher;
 import com.feiniaojin.naaf.console.entity.UserInfo;
-import com.feiniaojin.naaf.console.uinfo.query.dto.*;
-import com.feiniaojin.naaf.console.uinfo.query.exceptions.UserInfoExceptions;
 import com.feiniaojin.naaf.console.mapper.UserInfoMapper;
 import com.feiniaojin.naaf.console.mapper.UserInfoMapperEx;
 import com.feiniaojin.naaf.console.repository.UserInfoRepository;
+import com.feiniaojin.naaf.console.uinfo.query.dto.*;
+import com.feiniaojin.naaf.console.uinfo.query.exceptions.UserInfoExceptions;
 import com.google.gson.Gson;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +48,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Resource
     private UserInfoAggregateFactory factory;
 
+    @Resource(name = "userInfoPublisher")
+    private PulsarPublisher userInfoPublisher;
+
     private Gson gson = new Gson();
 
     @Override
@@ -58,7 +62,7 @@ public class UserInfoServiceImpl implements UserInfoService {
         log.info("UserInfo create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
         userInfoRepository.save(aggregate.getEntity());
         //TODO 发布事件
-
+        userInfoPublisher.send(gson.toJson(aggregate.getEntity()).getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -75,9 +79,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfoAggregate aggregate = factory.fromEntity(userInfo);
         UserInfoAggregate newAggregate = factory.newSnapshot(aggregate);
         Date nowTime = new Date();
+        //关闭旧的快照
         aggregate.closeSnapshot(nowTime);
-
-        newAggregate.update(input,nowTime);
+        //在新的快照上执行更新操作
+        newAggregate.update(input, nowTime);
         //保存
         log.info("UserInfo update:cmd=[{}],userInfo=[{}]", gson.toJson(cmd), gson.toJson(userInfo));
         userInfoRepository.save(aggregate.getEntity());

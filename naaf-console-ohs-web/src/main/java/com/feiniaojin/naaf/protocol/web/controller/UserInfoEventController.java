@@ -1,7 +1,7 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
-import com.feiniaojin.naaf.console.uinfo.command.dto.UserInfoEventCmd;
 import com.feiniaojin.naaf.console.uinfo.command.UserInfoEventService;
+import com.feiniaojin.naaf.console.uinfo.command.dto.UserInfoEventCmd;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/userInfoEvent")
 public class UserInfoEventController {
+
     @Resource
     private UserInfoEventService userInfoEventService;
 

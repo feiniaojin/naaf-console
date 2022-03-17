@@ -5,6 +5,7 @@ import com.feiniaojin.naaf.console.commons.EventTypeMapping;
 import com.feiniaojin.naaf.console.entity.UserInfoEvent;
 import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
 import com.feiniaojin.naaf.console.repository.UserInfoEventRepository;
+import com.feiniaojin.naaf.console.uinfo.command.events.CqrsEvent;
 import com.google.gson.Gson;
 import org.springframework.stereotype.Component;
 
@@ -21,18 +22,29 @@ public class UserInfoCreateEventHandler implements UserInfoEventHandler {
     @Resource
     private IdGeneratorIntegration idGeneratorIntegration;
 
-    @Resource
-    private PulsarPublisher publisher;
+    @Resource(name = "evsUserInfoPublisher")
+    private PulsarPublisher evsUserInfoPublisher;
 
     Gson gson = new Gson();
 
     @Override
     public void handle(UserInfoEvent userInfoEvent) {
-        //TODO 唯一性校验，是否接受事件
-        userInfoEvent.setUid(String.valueOf(idGeneratorIntegration.getUid()));
+
+        //赋值事件id
+        userInfoEvent.setEventId(idGeneratorIntegration.getStringUid());
+
         //事件入库
         userInfoEventRepository.save(userInfoEvent);
-        //TODO 发送消息，暂时序列化为string再获得消息体，之后用protobuf改造
-        publisher.send(gson.toJson(userInfoEvent).getBytes(StandardCharsets.UTF_8));
+
+        //发送事件通知Query侧
+        CqrsEvent event = CqrsEvent.builder()
+                .uid(userInfoEvent.getUid())
+                .mobilePhone(userInfoEvent.getMobilePhone())
+                .eventId(userInfoEvent.getEventId())
+                .eventType("create")
+                .userName(userInfoEvent.getUserName())
+                .email(userInfoEvent.getEmail())
+                .build();
+        evsUserInfoPublisher.send(gson.toJson(event).getBytes(StandardCharsets.UTF_8));
     }
 }

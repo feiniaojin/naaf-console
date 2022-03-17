@@ -1,6 +1,5 @@
 package com.feiniaojin.naaf.console.protocol.mq.listener;
 
-import com.feiniaojin.naaf.console.uinfo.command.dto.UserInfoEventCmd;
 import com.feiniaojin.naaf.console.uinfo.query.UserInfoEventQueryHandler;
 import com.feiniaojin.naaf.console.uinfo.query.UserInfoService;
 import com.feiniaojin.naaf.console.uinfo.query.dto.UserInfoCmd;
@@ -31,7 +30,7 @@ public class UserInfoEventListener implements MessageListener {
     @Override
     public void received(Consumer consumer, Message msg) {
         try {
-            System.out.println("Message received: " + new String(msg.getData()));
+            log.info("Message received: {}", new String(msg.getData()));
             String s = new String(msg.getData());
             UserInfoCmd userInfoCmd = gson.fromJson(s, UserInfoCmd.class);
             eventQueryHandler.handle(userInfoCmd);

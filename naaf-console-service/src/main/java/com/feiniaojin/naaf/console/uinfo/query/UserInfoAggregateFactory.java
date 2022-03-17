@@ -50,7 +50,7 @@ public class UserInfoAggregateFactory {
     }
 
     /**
-     * 聚合克隆
+     * 开启一个新的快照
      *
      * @param aggregate
      * @return
@@ -60,6 +60,7 @@ public class UserInfoAggregateFactory {
         UserInfo entity = aggregate.getEntity();
         UserInfo newEntity = new UserInfo();
         BeanUtils.copyProperties(entity, newEntity);
+        //新的快照id和version都为空
         newEntity.setId(null);
         newEntity.setVersion(null);
         cloneAggregate.setEntity(newEntity);
