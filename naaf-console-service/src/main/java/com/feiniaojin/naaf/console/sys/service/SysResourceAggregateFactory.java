@@ -29,7 +29,7 @@ public class SysResourceAggregateFactory {
     public SysResourceAggregate newFromCmd(SysResourceCmd cmd) {
         //根据cmd组装实体
         SysResource mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setResourceId(String.valueOf(idGeneratorIntegration.getUid()));
+        mapToEntity.setResourceId(String.valueOf(idGeneratorIntegration.getStringUid()));
         SysResourceAggregate aggregate = new SysResourceAggregate();
         aggregate.setEntity(mapToEntity);
         return aggregate;

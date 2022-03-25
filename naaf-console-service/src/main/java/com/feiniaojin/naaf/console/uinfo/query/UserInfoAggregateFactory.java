@@ -31,7 +31,7 @@ public class UserInfoAggregateFactory {
     public UserInfoAggregate newFromCmd(UserInfoCmd cmd) {
         //根据cmd组装实体
         UserInfo mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setUid(String.valueOf(idGeneratorIntegration.getUid()));
+        mapToEntity.setUid(idGeneratorIntegration.getStringUid());
         UserInfoAggregate aggregate = new UserInfoAggregate();
         aggregate.setEntity(mapToEntity);
         return aggregate;

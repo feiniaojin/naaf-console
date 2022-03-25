@@ -40,7 +40,7 @@ public class SysRoleAggregateFactory {
     public SysRoleAggregate newFromCmd(SysRoleCmd cmd) {
         //根据cmd组装实体
         SysRole mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setRoleId(String.valueOf(idGeneratorIntegration.getUid()));
+        mapToEntity.setRoleId(idGeneratorIntegration.getStringUid());
         SysRoleAggregate aggregate = new SysRoleAggregate();
         aggregate.setEntity(mapToEntity);
         //创建角色与资源的映射

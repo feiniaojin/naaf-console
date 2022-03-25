@@ -29,7 +29,7 @@ public class SysUserAggregateFactory {
     public SysUserAggregate newFromCmd(SysUserCmd cmd) {
         //根据cmd组装实体
         SysUser mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setUid(String.valueOf(idGeneratorIntegration.getUid()));
+        mapToEntity.setUid(idGeneratorIntegration.getStringUid());
         SysUserAggregate aggregate = new SysUserAggregate();
         aggregate.setEntity(mapToEntity);
         return aggregate;
