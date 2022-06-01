@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.sys.dto.SysResourceCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysResourceQuery;
-import com.feiniaojin.naaf.console.sys.dto.SysResourceView;
+import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceCmd;
+import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceQuery;
+import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceView;
 import com.feiniaojin.naaf.console.sys.resource.SysResourceService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

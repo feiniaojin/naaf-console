@@ -1,4 +1,4 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.resource.dto;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
  * github：https://github.com/feiniaojin/naaf-generator
  */
 @Data
-public class SysResourceView implements Serializable {
+public class SysResourceQuery implements Serializable {
     private Long id;
     private String resourceId;
     private String parentResourceId;
@@ -27,4 +27,6 @@ public class SysResourceView implements Serializable {
     private String modifiedBy;
     private Date modifiedTime;
     private Long version;
+    private Integer page = 1;
+    private Integer pageSize = 10;
 }

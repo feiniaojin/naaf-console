@@ -1,4 +1,4 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.resource.dto;
 
 import lombok.Data;
 
@@ -13,18 +13,7 @@ import java.util.Date;
  */
 @Data
 public class SysResourceCmd implements Serializable {
-    private Long id;
-    private String resourceId;
-    private Long parentResourceId;
+    private String parentResourceId;
     private String path;
-    private String mappingMethod;
-    private String httpMethod;
     private Integer type;
-    private Integer visible;
-    private Integer deleted;
-    private String createdBy;
-    private Date createdTime;
-    private String modifiedBy;
-    private Date modifiedTime;
-    private Long version;
 }

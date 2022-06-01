@@ -4,7 +4,6 @@ import com.feiniaojin.naaf.console.sys.account.dto.LoginCmd;
 import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessView;
 import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessViewAssembler;
 import com.feiniaojin.naaf.console.sys.account.dto.LogoutCmd;
-import com.feiniaojin.naaf.console.sys.account.exceptions.AccountException;
 import com.feiniaojin.naaf.console.sys.types.MobilePhone;
 import com.feiniaojin.naaf.console.sys.types.Password;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +31,7 @@ public class SysAccountServiceImpl implements SysAccountService {
 
     @Override
     public void createAccount(String mobilePhone) {
-        AccountAggregate accountAggregate = aggregateFactory.newAccountAggregate(new MobilePhone(mobilePhone));
+        AccountAggregate accountAggregate = aggregateFactory.newAggregate(new MobilePhone(mobilePhone));
         aggregateRepository.save(accountAggregate);
     }
 
@@ -41,7 +40,7 @@ public class SysAccountServiceImpl implements SysAccountService {
 
         AccountAggregate aggregate = aggregateRepository.load(new MobilePhone(cmd.getMobilePhone()));
         if (aggregate == null) {
-            throw new AccountException.AccountNotExistException();
+            throw new AccountExceptions.AccountNotExistException();
         }
         aggregate.login(new Password(cmd.getPassword()));
         aggregateRepository.save(aggregate);
@@ -54,7 +53,7 @@ public class SysAccountServiceImpl implements SysAccountService {
     public void logout(LogoutCmd cmd) {
         AccountAggregate aggregate = aggregateRepository.load(new Token(cmd.getToken()));
         if (aggregate == null) {
-            throw new AccountException.AccountNotExistException();
+            throw new AccountExceptions.AccountNotExistException();
         }
         aggregate.logout();
         aggregateRepository.save(aggregate);

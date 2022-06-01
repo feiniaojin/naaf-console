@@ -1,6 +1,5 @@
 package com.feiniaojin.naaf.console.sys.account;
 
-import com.feiniaojin.naaf.console.sys.account.exceptions.AccountException;
 import com.feiniaojin.naaf.console.sys.types.Email;
 import com.feiniaojin.naaf.console.sys.types.MobilePhone;
 import com.feiniaojin.naaf.console.sys.types.Password;
@@ -77,7 +76,7 @@ public class AccountAggregate {
             refreshToken();
             return;
         }
-        throw new AccountException.PasswordIncorrectException();
+        throw new AccountExceptions.PasswordIncorrectException();
     }
 
     private void refreshToken() {

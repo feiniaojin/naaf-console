@@ -1,4 +1,4 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.resource.dto;
 
 import com.feiniaojin.naaf.console.data.SysResource;
 import org.mapstruct.Mapper;

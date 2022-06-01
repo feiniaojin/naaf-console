@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AccountAggregateFactory {
 
-    public AccountAggregate newAccountAggregate(MobilePhone mobilePhone) {
+    public AccountAggregate newAggregate(MobilePhone mobilePhone) {
         AccountAggregate accountAggregate = new AccountAggregate();
         accountAggregate.setAccountId(new AccountId("accountId"));
         accountAggregate.setMobilePhone(mobilePhone);
