@@ -42,6 +42,7 @@ public class SysAccountServiceImpl implements SysAccountService {
             throw new AccountException.AccountNotExistException();
         }
         accountAggregate.login(new Password(password));
+        aggregateRepository.save(accountAggregate);
         LoginSuccessView loginSuccessView = loginSuccessViewAssembler.mapToView(accountAggregate);
         return loginSuccessView;
     }
