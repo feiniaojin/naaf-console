@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.sys.account;
 
-import com.feiniaojin.naaf.console.sys.values.MobilePhone;
+import com.feiniaojin.naaf.console.sys.types.MobilePhone;
 import org.springframework.stereotype.Component;
 
 @Component

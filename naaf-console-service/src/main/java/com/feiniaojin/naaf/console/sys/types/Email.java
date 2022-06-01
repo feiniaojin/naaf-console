@@ -1,4 +1,4 @@
-package com.feiniaojin.naaf.console.sys.values;
+package com.feiniaojin.naaf.console.sys.types;
 
 public class Email {
 

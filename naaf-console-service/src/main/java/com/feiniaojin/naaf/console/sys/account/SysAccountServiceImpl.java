@@ -5,8 +5,8 @@ import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessView;
 import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessViewAssembler;
 import com.feiniaojin.naaf.console.sys.account.dto.LogoutCmd;
 import com.feiniaojin.naaf.console.sys.account.exceptions.AccountException;
-import com.feiniaojin.naaf.console.sys.values.MobilePhone;
-import com.feiniaojin.naaf.console.sys.values.Password;
+import com.feiniaojin.naaf.console.sys.types.MobilePhone;
+import com.feiniaojin.naaf.console.sys.types.Password;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

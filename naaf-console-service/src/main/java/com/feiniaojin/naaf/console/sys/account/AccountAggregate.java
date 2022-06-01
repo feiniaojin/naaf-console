@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.console.sys.account;
 
 import com.feiniaojin.naaf.console.sys.account.exceptions.AccountException;
-import com.feiniaojin.naaf.console.sys.values.Email;
-import com.feiniaojin.naaf.console.sys.values.MobilePhone;
-import com.feiniaojin.naaf.console.sys.values.Password;
+import com.feiniaojin.naaf.console.sys.types.Email;
+import com.feiniaojin.naaf.console.sys.types.MobilePhone;
+import com.feiniaojin.naaf.console.sys.types.Password;
 import lombok.Data;
 
 import java.util.Date;

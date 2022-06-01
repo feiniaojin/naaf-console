@@ -4,7 +4,7 @@ import com.feiniaojin.naaf.console.data.SysAccount;
 import com.feiniaojin.naaf.console.mapper.SysAccountMapper;
 import com.feiniaojin.naaf.console.params.SysAccountParam;
 import com.feiniaojin.naaf.console.repository.SysAccountRepository;
-import com.feiniaojin.naaf.console.sys.values.MobilePhone;
+import com.feiniaojin.naaf.console.sys.types.MobilePhone;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
