@@ -1,6 +1,7 @@
 package com.feiniaojin.naaf.console.mapper;
 
 import com.feiniaojin.naaf.console.data.SysAccount;
+import com.feiniaojin.naaf.console.params.SysAccountParam;
 import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;
@@ -13,6 +14,12 @@ import javax.annotation.Generated;
  */
 @Generated("generator")
 public interface SysAccountMapper {
+
     int insert(SysAccount record);
+
     SysAccount findOneByBizId(@Param("id")String bizId);
+
+    SysAccount findOneByToken(SysAccountParam param);
+
+    SysAccount findOneByMobilePhone(SysAccountParam param);
 }

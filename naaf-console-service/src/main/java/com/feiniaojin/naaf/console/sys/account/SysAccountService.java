@@ -1,7 +1,9 @@
 package com.feiniaojin.naaf.console.sys.account;
 
 
+import com.feiniaojin.naaf.console.sys.account.dto.LoginCmd;
 import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessView;
+import com.feiniaojin.naaf.console.sys.account.dto.LogoutCmd;
 
 /**
  * sysAccount类Service接口
@@ -12,5 +14,7 @@ public interface SysAccountService {
 
     void createAccount(String mobilePhone);
 
-    LoginSuccessView login(String mobilePhone, String password);
+    LoginSuccessView login(LoginCmd cmd);
+
+    void logout(LogoutCmd cmd);
 }

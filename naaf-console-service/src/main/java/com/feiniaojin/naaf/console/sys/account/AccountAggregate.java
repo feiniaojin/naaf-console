@@ -37,7 +37,7 @@ public class AccountAggregate {
     /**
      * token
      */
-    private String token;
+    private Token token;
     /**
      * 加密使用的盐
      */
@@ -81,6 +81,14 @@ public class AccountAggregate {
     }
 
     private void refreshToken() {
-        this.token = UUID.randomUUID().toString();
+        this.token = new Token(UUID.randomUUID().toString());
+    }
+
+    public void logout() {
+        clearToken();
+    }
+
+    private void clearToken() {
+        this.token = null;
     }
 }

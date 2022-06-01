@@ -1,7 +1,9 @@
 package com.feiniaojin.naaf.console.sys.account;
 
+import com.feiniaojin.naaf.console.sys.account.dto.LoginCmd;
 import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessView;
 import com.feiniaojin.naaf.console.sys.account.dto.LoginSuccessViewAssembler;
+import com.feiniaojin.naaf.console.sys.account.dto.LogoutCmd;
 import com.feiniaojin.naaf.console.sys.account.exceptions.AccountException;
 import com.feiniaojin.naaf.console.sys.values.MobilePhone;
 import com.feiniaojin.naaf.console.sys.values.Password;
@@ -35,15 +37,27 @@ public class SysAccountServiceImpl implements SysAccountService {
     }
 
     @Override
-    public LoginSuccessView login(String mobilePhone, String password) {
+    public LoginSuccessView login(LoginCmd cmd) {
 
-        AccountAggregate accountAggregate = aggregateRepository.load(new MobilePhone(mobilePhone));
-        if (accountAggregate == null) {
+        AccountAggregate aggregate = aggregateRepository.load(new MobilePhone(cmd.getMobilePhone()));
+        if (aggregate == null) {
             throw new AccountException.AccountNotExistException();
         }
-        accountAggregate.login(new Password(password));
-        aggregateRepository.save(accountAggregate);
-        LoginSuccessView loginSuccessView = loginSuccessViewAssembler.mapToView(accountAggregate);
+        aggregate.login(new Password(cmd.getPassword()));
+        aggregateRepository.save(aggregate);
+        LoginSuccessView loginSuccessView = loginSuccessViewAssembler.mapToView(aggregate);
+        //TODO 缓存
         return loginSuccessView;
+    }
+
+    @Override
+    public void logout(LogoutCmd cmd) {
+        AccountAggregate aggregate = aggregateRepository.load(new Token(cmd.getToken()));
+        if (aggregate == null) {
+            throw new AccountException.AccountNotExistException();
+        }
+        aggregate.logout();
+        aggregateRepository.save(aggregate);
+        //TODO 清理缓存
     }
 }
