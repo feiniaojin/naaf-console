@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.sys.dto;
 
-import com.feiniaojin.naaf.console.entity.SysRole;
+import com.feiniaojin.naaf.console.data.SysRole;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;

@@ -21,7 +21,7 @@
         </dependency>
         <dependency>
             <groupId>com.feiniaojin.naaf</groupId>
-            <artifactId>naaf-console-domain</artifactId>
+            <artifactId>naaf-console-data</artifactId>
         </dependency>
     </dependencies>
 </project>

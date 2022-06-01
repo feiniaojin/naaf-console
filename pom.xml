@@ -53,7 +53,7 @@
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-domain</artifactId>
+                <artifactId>naaf-console-data</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -208,10 +208,8 @@
         <module>naaf-console-adapter-http</module>
         <module>naaf-console-adapter-rpc-consumer</module>
         <module>naaf-console-adapter-mq-publisher</module>
-        <module>naaf-console-domain</module>
+        <module>naaf-console-data</module>
         <module>naaf-console-commons</module>
-        <module>naaf-console-integration-id</module>
         <module>naaf-console-test</module>
-        <module>naaf-console-lifecycle</module>
     </modules>
 </project>

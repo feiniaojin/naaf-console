@@ -4,7 +4,7 @@ import com.feiniaojin.naaf.commons.data.PageBean;
 import com.feiniaojin.naaf.console.sys.dto.SysResourceCmd;
 import com.feiniaojin.naaf.console.sys.dto.SysResourceQuery;
 import com.feiniaojin.naaf.console.sys.dto.SysResourceView;
-import com.feiniaojin.naaf.console.sys.service.SysResourceService;
+import com.feiniaojin.naaf.console.sys.resource.SysResourceService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.mapper;
 
-import com.feiniaojin.naaf.console.entity.UserInfo;
+import com.feiniaojin.naaf.console.data.UserInfo;
 import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;

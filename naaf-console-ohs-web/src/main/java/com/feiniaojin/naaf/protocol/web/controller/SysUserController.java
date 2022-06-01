@@ -4,7 +4,7 @@ import com.feiniaojin.naaf.commons.data.PageBean;
 import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
 import com.feiniaojin.naaf.console.sys.dto.SysUserQuery;
 import com.feiniaojin.naaf.console.sys.dto.SysUserView;
-import com.feiniaojin.naaf.console.sys.service.SysUserService;
+import com.feiniaojin.naaf.console.sys.user.SysUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 /**
  * SysUser类Controller类
  * 表名称：sys_user
- * 表注释：用户账号表
+ * 表注释：用户信息表
  */
 @RestController
 @RequestMapping("/sysUser")

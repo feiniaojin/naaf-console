@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.repository;
 
-import com.feiniaojin.naaf.console.entity.SysUser;
+import com.feiniaojin.naaf.console.data.SysUser;
 import org.springframework.data.repository.CrudRepository;
 
 /**

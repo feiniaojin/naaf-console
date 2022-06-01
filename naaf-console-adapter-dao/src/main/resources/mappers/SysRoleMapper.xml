@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.feiniaojin.naaf.console.mapper.SysRoleMapper">
-    <resultMap id="BaseResultMap" type="com.feiniaojin.naaf.console.entity.SysRole">
+    <resultMap id="BaseResultMap" type="com.feiniaojin.naaf.console.data.SysRole">
         <result column="id" property="id"/>
         <result column="role_id" property="roleId"/>
         <result column="role_name" property="roleName"/>
@@ -27,7 +27,7 @@
         modified_time,
         version
     </sql>
-    <insert id="insert" parameterType="com.feiniaojin.naaf.console.entity.SysRole">
+    <insert id="insert" parameterType="com.feiniaojin.naaf.console.data.SysRole">
         insert into sys_role (
         id,
         role_id,

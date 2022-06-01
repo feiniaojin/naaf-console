@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.mapper;
 
-import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
+import com.feiniaojin.naaf.console.data.SysRoleRelResource;
 import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;

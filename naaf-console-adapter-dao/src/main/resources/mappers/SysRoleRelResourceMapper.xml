@@ -5,7 +5,7 @@
 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.feiniaojin.naaf.console.mapper.SysRoleRelResourceMapper">
-    <resultMap id="BaseResultMap" type="com.feiniaojin.naaf.console.entity.SysRoleRelResource">
+    <resultMap id="BaseResultMap" type="com.feiniaojin.naaf.console.data.SysRoleRelResource">
         <result column="id" property="id"/>
         <result column="role_id" property="roleId"/>
         <result column="resource_id" property="resourceId"/>
@@ -27,7 +27,7 @@
         modified_time,
         version
     </sql>
-    <insert id="insert" parameterType="com.feiniaojin.naaf.console.entity.SysRoleRelResource">
+    <insert id="insert" parameterType="com.feiniaojin.naaf.console.data.SysRoleRelResource">
         insert into sys_role_rel_resource (
         id,
         role_id,

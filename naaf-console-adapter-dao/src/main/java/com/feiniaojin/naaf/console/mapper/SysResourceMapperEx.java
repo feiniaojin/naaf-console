@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.mapper;
 
-import com.feiniaojin.naaf.console.entity.SysResource;
+import com.feiniaojin.naaf.console.data.SysResource;
 import org.apache.ibatis.annotations.Param;
 
 import javax.annotation.Generated;

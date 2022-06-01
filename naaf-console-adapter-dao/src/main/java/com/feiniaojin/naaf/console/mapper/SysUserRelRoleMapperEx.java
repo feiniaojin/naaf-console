@@ -1,7 +1,6 @@
 package com.feiniaojin.naaf.console.mapper;
 
-import com.feiniaojin.naaf.console.entity.SysRoleRelResource;
-import com.feiniaojin.naaf.console.entity.SysUserRelRole;
+import com.feiniaojin.naaf.console.data.SysUserRelRole;
 
 import javax.annotation.Generated;
 import java.util.List;
