@@ -1,6 +1,5 @@
 package com.feiniaojin.naaf.console.commons;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
