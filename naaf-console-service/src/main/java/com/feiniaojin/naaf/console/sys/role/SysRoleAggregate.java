@@ -1,12 +1,9 @@
 package com.feiniaojin.naaf.console.sys.role;
 
-import com.feiniaojin.naaf.console.data.SysRole;
-import com.feiniaojin.naaf.console.data.SysRoleRelResource;
+import com.feiniaojin.naaf.console.sys.resource.ResourceId;
 import lombok.Data;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,51 +12,42 @@ import java.util.List;
 @Data
 public class SysRoleAggregate {
 
-    private SysRole entity;
-
-    private List<String> resourceIdList;
-
     /**
-     * 角色关联的受限资源
+     * 自增主键,业务不用
      */
-    private List<SysRoleRelResource> roleRelResourceList;
-
+    private Long id;
     /**
-     * 执行初始化逻辑
-     *
-     * @return
+     * 角色id
      */
-    public SysRole create() {
-        //初始化方法
-        entity.setDeleted(0);
-        return entity;
-    }
-
+    private RoleId roleId;
     /**
-     * 执行更新逻辑
-     *
-     * @param newEntity
-     * @return
+     * 角色名称
      */
-    public SysRole update(SysRole newEntity, List<String> resourceIdLis) {
-        //更新的具体逻辑
-        if (StringUtils.isNotBlank(newEntity.getRoleName())) {
-            this.entity.setRoleName(newEntity.getRoleName());
-        }
-        this.resourceIdList = resourceIdLis;
-        if (CollectionUtils.isEmpty(resourceIdLis)) {
-            this.resourceIdList = new ArrayList<>();
-        } else {
-            List<SysRoleRelResource> list = new ArrayList<>();
-            for (String resourceId : resourceIdLis) {
-                SysRoleRelResource rel = new SysRoleRelResource();
-                rel.setRoleId(this.entity.getRoleId());
-                rel.setResourceId(resourceId);
-                rel.setDeleted(0);
-                list.add(rel);
-            }
-            this.roleRelResourceList = list;
-        }
-        return entity;
-    }
+    private String roleName;
+    /**
+     * 逻辑删除标记[0-正常;1-已删除]
+     */
+    private Integer deleted;
+    /**
+     * 创建人
+     */
+    private String createdBy;
+    /**
+     * 创建时间
+     */
+    private Date createdTime;
+    /**
+     * 更新人
+     */
+    private String modifiedBy;
+    /**
+     * 更新时间
+     */
+    private Date modifiedTime;
+    /**
+     * 乐观锁
+     */
+    private Long version;
+
+    private List<ResourceId> resourceIds;
 }

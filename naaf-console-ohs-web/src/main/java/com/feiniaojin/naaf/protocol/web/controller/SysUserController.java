@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysUserQuery;
-import com.feiniaojin.naaf.console.sys.dto.SysUserView;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserCmd;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserQuery;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserView;
 import com.feiniaojin.naaf.console.sys.user.SysUserService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +24,6 @@ public class SysUserController {
     @RequestMapping("/create")
     public void create(SysUserCmd command){
         sysUserService.create(command);
-    }
-
-    @RequestMapping("/update")
-    public void update(SysUserCmd command){
-        sysUserService.update(command);
     }
 
     @RequestMapping("/detail")

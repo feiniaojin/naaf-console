@@ -1,4 +1,4 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.user.dto;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import java.util.Date;
  * github：https://github.com/feiniaojin/naaf-generator
  */
 @Data
-public class SysUserQuery implements Serializable {
+public class SysUserView implements Serializable {
     private Long id;
     private String uid;
     private String mobilePhone;
@@ -27,6 +27,4 @@ public class SysUserQuery implements Serializable {
     private String modifiedBy;
     private Date modifiedTime;
     private Long version;
-    private Integer page = 1;
-    private Integer pageSize = 10;
 }

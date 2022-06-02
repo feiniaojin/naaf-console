@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.console.sys.user;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysUserQuery;
-import com.feiniaojin.naaf.console.sys.dto.SysUserView;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserCmd;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserQuery;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserView;
 
 /**
  * sysUser类Service接口
@@ -18,13 +18,6 @@ public interface SysUserService {
      * @param cmd
      */
     void create(SysUserCmd cmd);
-
-    /**
-     * 更新
-     *
-     * @param cmd
-     */
-    void update(SysUserCmd cmd);
 
     /**
      * 根据业务主键查询

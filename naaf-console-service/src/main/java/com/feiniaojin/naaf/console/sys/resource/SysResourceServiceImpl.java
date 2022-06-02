@@ -18,7 +18,6 @@ import javax.annotation.Resource;
 @Slf4j
 public class SysResourceServiceImpl implements SysResourceService {
 
-
     @Resource
     private SysResourceCmdAssembler cmdAssembler;
 

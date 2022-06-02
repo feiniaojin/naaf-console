@@ -1,10 +1,9 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.role.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 表名称：sys_role
@@ -13,7 +12,7 @@ import java.util.List;
  * github：https://github.com/feiniaojin/naaf-generator
  */
 @Data
-public class SysRoleCmd implements Serializable {
+public class SysRoleView implements Serializable {
     private Long id;
     private String roleId;
     private String roleName;
@@ -23,5 +22,4 @@ public class SysRoleCmd implements Serializable {
     private String modifiedBy;
     private Date modifiedTime;
     private Long version;
-    private List<String> resourceIdList;
 }

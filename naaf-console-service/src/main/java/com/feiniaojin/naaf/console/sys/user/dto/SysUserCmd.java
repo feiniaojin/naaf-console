@@ -1,9 +1,9 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.user.dto;
 
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 /**
  * 表名称：sys_user
@@ -13,18 +13,18 @@ import java.util.Date;
  */
 @Data
 public class SysUserCmd implements Serializable {
-    private Long id;
+    /**
+     * 用户id,业务使用
+     */
     private String uid;
-    private String mobilePhone;
-    private String email;
+    /**
+     * 用户名
+     */
     private String userName;
-    private String password;
-    private String salt;
-    private Integer status;
-    private Integer deleted;
-    private String createdBy;
-    private Date createdTime;
-    private String modifiedBy;
-    private Date modifiedTime;
-    private Long version;
+    /**
+     * 头像
+     */
+    private String profileImgUrl;
+
+    private List<String> roleIdList;
 }

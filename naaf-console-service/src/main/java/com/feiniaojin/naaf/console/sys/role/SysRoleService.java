@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.console.sys.role;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.sys.dto.SysRoleCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysRoleQuery;
-import com.feiniaojin.naaf.console.sys.dto.SysRoleView;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleCmd;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleQuery;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleView;
 
 /**
  * sysRole类Service接口
@@ -18,13 +18,6 @@ public interface SysRoleService {
      * @param cmd
      */
     void create(SysRoleCmd cmd);
-
-    /**
-     * 更新
-     *
-     * @param cmd
-     */
-    void update(SysRoleCmd cmd);
 
     /**
      * 根据业务主键查询

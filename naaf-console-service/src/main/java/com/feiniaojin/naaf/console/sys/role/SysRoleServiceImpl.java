@@ -2,16 +2,17 @@ package com.feiniaojin.naaf.console.sys.role;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
 import com.feiniaojin.naaf.console.data.SysRole;
-import com.feiniaojin.naaf.console.sys.dto.*;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapper;
 import com.feiniaojin.naaf.console.mapper.SysRoleMapperEx;
-import com.feiniaojin.naaf.console.repository.SysRoleRelResourceRepository;
 import com.feiniaojin.naaf.console.repository.SysRoleRepository;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleCmd;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleQuery;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleView;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleViewAssembler;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
@@ -37,65 +38,36 @@ public class SysRoleServiceImpl implements SysRoleService {
     private SysRoleRepository sysRoleRepository;
 
     @Resource
-    private SysRoleRelResourceRepository roleRelResourceRepository;
-
-    @Resource
-    private SysRoleCmdAssembler cmdAssembler;
-
-    @Resource
-    private SysRoleViewAssembler viewAssembler;
-
-    @Resource
-    private SysRoleAggregateFactory factory;
+    private SysRoleAggregateFactory aggregateFactory;
 
     @Resource
     private SysRoleAggregateRepository aggregateRepository;
 
+    @Resource
+    private SysRoleViewAssembler viewAssembler;
+
     private Gson gson = new Gson();
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public void create(SysRoleCmd cmd) {
         //根据cmd组装实体
-        SysRoleAggregate aggregate = factory.newFromCmd(cmd);
+        SysRoleAggregate aggregate = aggregateFactory.newAggregate(cmd.getRoleName(), cmd.getResourceIdList());
         //执行创建的初始化逻辑
-        aggregate.create();
-        log.info("SysRole create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
+        if (log.isInfoEnabled()) {
+            log.info("SysRole create:cmd=[{}],aggregate=[{}]", gson.toJson(cmd), gson.toJson(aggregate));
+        }
         aggregateRepository.save(aggregate);
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void update(SysRoleCmd cmd) {
-        //查询数据
-        SysRole sysRole = sysRoleMapperEx.findOne(cmd.getRoleId());
-        if (sysRole == null) {
-            log.error("查询不到数据,cmd=[{}]", gson.toJson(cmd));
-            throw new SysRoleExceptions.NotFoundException();
-        }
-        //cmd转换为实体，作为输入
-        SysRole input = cmdAssembler.mapToEntity(cmd);
-        List<String> resourceIdList = cmd.getResourceIdList();
-        //获得聚合以执行业务更新
-        SysRoleAggregate aggregate = factory.fromEntity(sysRole);
-        //实际执行更新操作
-        aggregate.update(input, resourceIdList);
-        log.info("SysRole update:cmd=[{}],sysRole=[{}]", gson.toJson(cmd), gson.toJson(sysRole));
-        //保存更新操作，并清理旧的资源
-        aggregateRepository.saveUpdate(aggregate);
-    }
-
-    @Override
     public SysRoleView get(SysRoleQuery query) {
-        //查询数据
-        String roleId = query.getRoleId();
-        SysRole sysRole = sysRoleMapperEx.findOne(roleId);
-        if (sysRole == null) {
-            log.error("查询不到数据,query=[{}]", gson.toJson(query));
+
+        SysRoleAggregate aggregate = aggregateRepository.load(new RoleId(query.getRoleId()));
+        if (aggregate == null) {
             throw new SysRoleExceptions.NotFoundException();
         }
         //拼接为view
-        SysRoleView view = viewAssembler.mapToView(sysRole);
+        SysRoleView view = viewAssembler.mapToView(aggregate);
         return view;
     }
 

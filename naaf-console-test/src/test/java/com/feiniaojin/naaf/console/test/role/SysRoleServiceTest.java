@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.test.role;
 
-import com.feiniaojin.naaf.console.sys.dto.SysRoleCmd;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleCmd;
 import com.feiniaojin.naaf.console.sys.role.SysRoleService;
 import com.feiniaojin.naaf.console.test.AbstractBaseTest;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,9 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.sys.dto.SysRoleCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysRoleQuery;
-import com.feiniaojin.naaf.console.sys.dto.SysRoleView;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleCmd;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleQuery;
+import com.feiniaojin.naaf.console.sys.role.dto.SysRoleView;
 import com.feiniaojin.naaf.console.sys.role.SysRoleService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,11 +24,6 @@ public class SysRoleController {
     @RequestMapping("/create")
     public void create(SysRoleCmd command){
         sysRoleService.create(command);
-    }
-
-    @RequestMapping("/update")
-    public void update(SysRoleCmd command){
-        sysRoleService.update(command);
     }
 
     @RequestMapping("/detail")

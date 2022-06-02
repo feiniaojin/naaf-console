@@ -1,6 +1,6 @@
 package com.feiniaojin.naaf.console.test.sysuser;
 
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
+import com.feiniaojin.naaf.console.sys.user.dto.SysUserCmd;
 import com.feiniaojin.naaf.console.sys.user.SysUserService;
 import com.feiniaojin.naaf.console.test.AbstractBaseTest;
 import org.junit.jupiter.api.Test;

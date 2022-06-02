@@ -1,11 +1,11 @@
 package com.feiniaojin.naaf.console.sys.user;
 
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
-import com.feiniaojin.naaf.console.sys.dto.SysUserCmdAssembler;
-import com.feiniaojin.naaf.console.data.SysUser;
+import com.feiniaojin.naaf.console.sys.role.RoleId;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 工厂存在的原因是解决复杂对象的创建问题，例如为对象的id属性赋值
@@ -13,33 +13,17 @@ import javax.annotation.Resource;
 @Component
 public class SysUserAggregateFactory {
 
-    @Resource
-    private SysUserCmdAssembler cmdAssembler;
-
-    /**
-     * 根据cmd对象创建新的实体
-     *
-     * @param cmd
-     * @return
-     */
-    public SysUserAggregate newFromCmd(SysUserCmd cmd) {
-        //根据cmd组装实体
-        SysUser mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setUid("");
+    public SysUserAggregate newAggregate(String userName,
+                                         String profileImgUrl,
+                                         List<String> roleIdList) {
         SysUserAggregate aggregate = new SysUserAggregate();
-        aggregate.setEntity(mapToEntity);
+        aggregate.setUserName(userName);
+        aggregate.setProfileImgUrl(profileImgUrl);
+        aggregate.setDeleted(0);
+        if (CollectionUtils.isNotEmpty(roleIdList)) {
+            aggregate.setRoleIdList(roleIdList.stream().map(r -> new RoleId(r)).collect(Collectors.toList()));
+        }
         return aggregate;
     }
 
-    /**
-     * 从实体创建聚合
-     *
-     * @param newEntity
-     * @return
-     */
-    public SysUserAggregate fromEntity(SysUser newEntity) {
-        SysUserAggregate aggregate = new SysUserAggregate();
-        aggregate.setEntity(newEntity);
-        return aggregate;
-    }
 }

@@ -1,4 +1,4 @@
-package com.feiniaojin.naaf.console.sys.dto;
+package com.feiniaojin.naaf.console.sys.user.dto;
 
 import com.feiniaojin.naaf.console.data.SysUser;
 import org.mapstruct.Mapper;
