@@ -1,10 +1,7 @@
 package com.feiniaojin.naaf.protocol.web.controller;
 
-import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceCmd;
-import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceQuery;
-import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceView;
 import com.feiniaojin.naaf.console.sys.resource.SysResourceService;
+import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceCmd;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,22 +19,12 @@ public class SysResourceController {
     private SysResourceService sysResourceService;
 
     @RequestMapping("/create")
-    public void create(SysResourceCmd command){
+    public void create(SysResourceCmd command) {
         sysResourceService.create(command);
     }
 
     @RequestMapping("/update")
-    public void update(SysResourceCmd command){
-        sysResourceService.update(command);
+    public void update(SysResourceCmd command) {
     }
 
-    @RequestMapping("/detail")
-    public SysResourceView detail(SysResourceQuery query){
-        return sysResourceService.get(query);
-    }
-
-    @RequestMapping("/pageList")
-    public PageBean<SysResourceView> pageList(SysResourceQuery query){
-        return sysResourceService.pageList(query);
-    }
 }

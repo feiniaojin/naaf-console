@@ -1,6 +1,5 @@
 package com.feiniaojin.naaf.console.sys.role;
 
-import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
 import com.feiniaojin.naaf.console.sys.dto.SysRoleCmd;
 import com.feiniaojin.naaf.console.sys.dto.SysRoleCmdAssembler;
 import com.feiniaojin.naaf.console.data.SysRole;
@@ -26,9 +25,6 @@ public class SysRoleAggregateFactory {
     private SysRoleCmdAssembler cmdAssembler;
 
     @Resource
-    private IdGeneratorIntegration idGeneratorIntegration;
-
-    @Resource
     private SysRoleRelResourceMapperEx relResourceMapperEx;
 
     /**
@@ -40,7 +36,7 @@ public class SysRoleAggregateFactory {
     public SysRoleAggregate newFromCmd(SysRoleCmd cmd) {
         //根据cmd组装实体
         SysRole mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setRoleId(idGeneratorIntegration.getStringUid());
+        mapToEntity.setRoleId("");
         SysRoleAggregate aggregate = new SysRoleAggregate();
         aggregate.setEntity(mapToEntity);
         //创建角色与资源的映射

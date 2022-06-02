@@ -22,8 +22,6 @@ public class SysResourceServiceTest extends AbstractBaseTest {
     @Test
     public void test0() {
         SysResourceCmd cmd = new SysResourceCmd();
-        cmd.setCreatedBy("test");
-        cmd.setHttpMethod("POST");
         cmd.setPath("/sysResource/create");
         sysResourceService.create(cmd);
     }
@@ -32,7 +30,5 @@ public class SysResourceServiceTest extends AbstractBaseTest {
     public void test1() {
         SysResourceQuery query = new SysResourceQuery();
         query.setId(1L);
-        SysResourceView sysResourceView = sysResourceService.get(query);
-        log.info("view=[{}]", gson.toJson(sysResourceView));
     }
 }

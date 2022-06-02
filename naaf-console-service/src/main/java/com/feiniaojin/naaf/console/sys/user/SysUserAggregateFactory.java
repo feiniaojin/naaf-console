@@ -1,6 +1,5 @@
 package com.feiniaojin.naaf.console.sys.user;
 
-import com.feiniaojin.naaf.console.integration.id.IdGeneratorIntegration;
 import com.feiniaojin.naaf.console.sys.dto.SysUserCmd;
 import com.feiniaojin.naaf.console.sys.dto.SysUserCmdAssembler;
 import com.feiniaojin.naaf.console.data.SysUser;
@@ -17,9 +16,6 @@ public class SysUserAggregateFactory {
     @Resource
     private SysUserCmdAssembler cmdAssembler;
 
-    @Resource
-    private IdGeneratorIntegration idGeneratorIntegration;
-
     /**
      * 根据cmd对象创建新的实体
      *
@@ -29,7 +25,7 @@ public class SysUserAggregateFactory {
     public SysUserAggregate newFromCmd(SysUserCmd cmd) {
         //根据cmd组装实体
         SysUser mapToEntity = cmdAssembler.mapToEntity(cmd);
-        mapToEntity.setUid(idGeneratorIntegration.getStringUid());
+        mapToEntity.setUid("");
         SysUserAggregate aggregate = new SysUserAggregate();
         aggregate.setEntity(mapToEntity);
         return aggregate;

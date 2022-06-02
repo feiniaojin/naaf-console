@@ -53,12 +53,7 @@
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-data</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-adapter-dao</artifactId>
+                <artifactId>naaf-console-infrastructure-persistence</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -66,29 +61,10 @@
                 <artifactId>naaf-console-adapter-http</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-            <dependency>
-                <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-adapter-rpc-consumer</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-adapter-mq-publisher</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
+
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
                 <artifactId>naaf-console-service</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-ohs-rpc-provider</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-ohs-mq-listener</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -103,7 +79,7 @@
             </dependency>
             <dependency>
                 <groupId>com.feiniaojin.naaf</groupId>
-                <artifactId>naaf-console-app</artifactId>
+                <artifactId>naaf-console-launcher</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
             <dependency>
@@ -198,17 +174,11 @@
         </pluginManagement>
     </build>
     <modules>
-        <module>naaf-console-app</module>
+        <module>naaf-console-launcher</module>
         <module>naaf-console-ohs-web</module>
         <module>naaf-console-ohs-schedule</module>
-        <module>naaf-console-ohs-rpc-provider</module>
-        <module>naaf-console-ohs-mq-listener</module>
         <module>naaf-console-service</module>
-        <module>naaf-console-adapter-dao</module>
-        <module>naaf-console-adapter-http</module>
-        <module>naaf-console-adapter-rpc-consumer</module>
-        <module>naaf-console-adapter-mq-publisher</module>
-        <module>naaf-console-data</module>
+        <module>naaf-console-infrastructure-persistence</module>
         <module>naaf-console-commons</module>
         <module>naaf-console-test</module>
     </modules>

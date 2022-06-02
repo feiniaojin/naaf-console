@@ -1,7 +1,6 @@
 package com.feiniaojin.naaf.console.sys.user;
 
 import com.feiniaojin.naaf.commons.data.PageBean;
-import com.feiniaojin.naaf.console.adapter.mq.publisher.PulsarPublisher;
 import com.feiniaojin.naaf.console.data.SysUser;
 import com.feiniaojin.naaf.console.mapper.SysUserMapper;
 import com.feiniaojin.naaf.console.mapper.SysUserMapperEx;
@@ -49,9 +48,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Resource
     private SysUserAggregateRepository aggregateRepository;
-
-    @Resource(name = "sysUserPublisher")
-    private PulsarPublisher sysUserPublisher;
 
     private Gson gson = new Gson();
 

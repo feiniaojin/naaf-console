@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>com.feiniaojin.naaf</groupId>
-            <artifactId>naaf-console-app</artifactId>
+            <artifactId>naaf-console-launcher</artifactId>
         </dependency>
     </dependencies>
 </project>
