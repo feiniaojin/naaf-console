@@ -1,7 +1,6 @@
 package com.feiniaojin.naaf.console.sys.resource;
 
 import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceCmd;
-import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceCmdAssembler;
 import com.feiniaojin.naaf.console.sys.resource.dto.SysResourceViewAssembler;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +16,6 @@ import javax.annotation.Resource;
 @Service
 @Slf4j
 public class SysResourceServiceImpl implements SysResourceService {
-
-    @Resource
-    private SysResourceCmdAssembler cmdAssembler;
 
     @Resource
     private SysResourceViewAssembler viewAssembler;
